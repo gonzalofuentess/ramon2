@@ -22,7 +22,7 @@ include '../static/sesion.php';
                             <div class="span7">
                                 <header class="page-header">                             
                                     <h3>Dashboard <br>
-                                       <small>Radio Monitoreo FM</small>
+                                        <small>Radio Monitoreo FM</small>
                                     </h3>
                                 </header>
                             </div>
@@ -45,7 +45,7 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
-
+                <div id="chart-container"></div>
 
 
             </div>
@@ -65,6 +65,11 @@ include '../static/sesion.php';
         </footer>
 
         <?php include '../static/script.html'; ?>
+
+       
+
+       
+
     </body>
 
 </html>
