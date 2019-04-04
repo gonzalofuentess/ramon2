@@ -22,7 +22,7 @@ include '../static/sesion.php';
                             <div class="span7">
                                 <header class="page-header">                             
                                     <h3>Configuración <br>
-                                       <small>Radio Monitoreo FM</small>
+                                        <small>Radio Monitoreo FM</small>
                                     </h3>
                                 </header>
                             </div>
@@ -34,10 +34,30 @@ include '../static/sesion.php';
                                         </li>
                                     </ul>
                                     <ul class="nav nav-tabs">
-                                        <li class="active">
-                                            <a href="#"><i class="icon-home"></i>Radio</a>
-                                        </li>
-                                        <li><a href="#"><i class="icon-check"></i>Alertas</a></li>                                      
+
+                                        <?php
+                                        if (isset($_GET["menu"])) {
+                                            switch ($_GET["menu"]) {
+                                                case "alertas":
+                                                    ?>
+
+                                                    <li><a href="../config/"><i class="icon-home"></i>Radio</a></li>
+                                                    <li class="active"><a href="../config/index.php?menu=alertas"><i class="icon-check"></i>Alertas</a></li> 
+                                                    <?php
+                                                    break;
+                                                default :
+                                                    ?>
+
+
+                                                    <?php
+                                                    break;
+                                            }
+                                        } else { ?>
+                                            <li class = "active"><a href = "../config/"><i class = "icon-home"></i>Radio</a> </li>
+                                            <li><a href = "../config/index.php?menu=alertas"><i class = "icon-check"></i>Alertas</a></li>
+                                        <?php }
+                                        ?>
+
                                     </ul>
                                 </div>
                             </div>
@@ -45,7 +65,16 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
-<?php include './main.html'; ?>
+
+
+                <?php
+                if (isset($_GET["menu"])) {
+                    
+                } else {
+
+                    include './main.html';
+                }
+                ?>
 
 
             </div>
