@@ -33,10 +33,35 @@
         <h4 class="modal-title">Cambiar Contraseña</h4>
       </div>
       <div class="modal-body">
-        <p>Some text in the modal.</p>
+        <div id="acct-password-row" class="span7">
+                <fieldset>                  
+                    <div class="control-group ">
+                        <label class="control-label">Contraseña Actual<span class="required"></span></label>
+                        <div class="controls">
+                            <input id="oldpass" name="oldpass" class="span4" type="password" value="" required>
+                        </div>
+                    </div>
+                    <div class="control-group ">
+                        <label class="control-label">Nueva Cotraseña</label>
+                        <div class="controls">
+                            <input id="newpass" name="newpass" class="span4" type="password" value="" required>
+
+                        </div>
+                    </div>     
+                     <div class="control-group ">
+                        <label class="control-label">Confirmar Cotraseña</label>
+                        <div class="controls">
+                            <input id="confirmarpass" name="confirmarpass" class="span4" type="password" value="" required>
+
+                        </div>
+                    </div>   
+                </fieldset>
+            </div>
+          
+          
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
       </div>
     </div>
 
