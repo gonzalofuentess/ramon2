@@ -3,7 +3,7 @@ include '../static/sesion.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <?php include '../static/head.html'; ?>
 

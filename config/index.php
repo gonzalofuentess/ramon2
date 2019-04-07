@@ -3,7 +3,7 @@ include '../static/sesion.php';
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
     <head>
         <?php include '../static/head.html'; ?>
 
@@ -38,23 +38,17 @@ include '../static/sesion.php';
                                         <?php
                                         if (isset($_GET["menu"])) {
                                             switch ($_GET["menu"]) {
-                                                case "alertas":
+                                                case "correo":
                                                     ?>
-
                                                     <li><a href="../config/"><i class="icon-home"></i>Radio</a></li>
-                                                    <li class="active"><a href="../config/index.php?menu=alertas"><i class="icon-check"></i>Alertas</a></li> 
-                                                    <?php
-                                                    break;
-                                                default :
-                                                    ?>
-
-
+                                                    <li class="active"><a><i class="icon-envelope-alt"></i>Correo</a></li>                                                   
                                                     <?php
                                                     break;
                                             }
-                                        } else { ?>
-                                            <li class = "active"><a href = "../config/"><i class = "icon-home"></i>Radio</a> </li>
-                                            <li><a href = "../config/index.php?menu=alertas"><i class = "icon-check"></i>Alertas</a></li>
+                                        } else {
+                                            ?>
+                                            <li class = "active"><a><i class="icon-home"></i>Radio </a></li>
+                                            <li><a href = "../config/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li>
                                         <?php }
                                         ?>
 
@@ -69,6 +63,14 @@ include '../static/sesion.php';
 
                 <?php
                 if (isset($_GET["menu"])) {
+                    
+                    switch ($_GET["menu"]){
+                        case  "correo":
+                            
+                            include './correo.html';
+                            break;                        
+                        
+                    }
                     
                 } else {
 
