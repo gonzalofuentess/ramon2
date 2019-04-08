@@ -37,14 +37,14 @@
                 </div>
             </div>
         </div>
-        <div class="span8">
+        <div class="span4">
             <div class="box">
                 <div class="box-header">
                     <i class="icon-signal"></i>
                     <h5>Señal FM</h5>
                 </div>
                 <div class="box-content">
-                      <script>
+                    <script>
                         google.charts.load('current', {'packages': ['gauge']});
                         google.charts.setOnLoadCallback(drawChart);
 
@@ -65,16 +65,18 @@
 
                             chart.draw(data, options);
 
-                             setInterval(function() {
-                                     data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-                                     chart.draw(data, options);
-                                   }, 1300)
+                            setInterval(function () {
+                                data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+                                chart.draw(data, options);
+                            }, 1300)
                         }
                     </script>
-                    
-                    <div id="chart_div" style="width: 400px; height: 120px;"></div>
-                  
 
+                    <div id="chart_div" style="width: 400px; height: 120px;"></div> 
+                    <br>
+                    <br>
+                    <br>
+                    <br>
                 </div>               
             </div>
         </div>
