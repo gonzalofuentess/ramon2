@@ -58,28 +58,28 @@
                 </div>
 
             </div> 
+        </div>
 
+        <!-- ============================================================== -->
+        <!-- end login page  -->
+        <!-- ============================================================== -->
+        <!-- Optional JavaScript -->
 
-            <!-- ============================================================== -->
-            <!-- end login page  -->
-            <!-- ============================================================== -->
-            <!-- Optional JavaScript -->
-
-            <script>
-                function Validar(user, pass)
-                {
-                    $.ajax({
-                        url: "validar.php",
-                        type: "POST",
-                        data: "user=" + user + "&pass=" + pass,
-                        success: function (resp) {
-                            $('#resultado').html(resp);
-                        }
-                    });
-                }
-            </script>
-            <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
-            <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+        <script>
+            function Validar(user, pass)
+            {
+                $.ajax({
+                    url: "validar.php",
+                    type: "POST",
+                    data: "user=" + user + "&pass=" + pass,
+                    success: function (resp) {
+                        $('#resultado').html(resp);
+                    }
+                });
+            }
+        </script>
+        <script src="assets/vendor/jquery/jquery-3.3.1.min.js"></script>
+        <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
 
     </body>
 
