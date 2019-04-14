@@ -27,7 +27,9 @@ if ($senals != $senal) {
     if ($conn2->query($sql2) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";
     } else {
-        echo shell_exec("sudo /usr/bin/python3 /var/www/html/config/actualizaini.py -f 101.3");
+       # $comando = "sudo /usr/bin/python3 /var/www/html/config/actualizaini.py -f ".strval($senal);   
+       # $comando = "sudo /bin/bash /var/www/html/config/actualizador.sh";
+       # passthru($comando);
         $cont = 1;
     }
 } if ($descripcions != $descripcion) {
@@ -36,7 +38,7 @@ if ($senals != $senal) {
     if ($conn2->query($sql3) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";
     } else {
-        exec('sudo /usr/bin/python3 /var/www/html/config/actualizaini.py -c ' . $descripcion);
+       # exec('sudo /usr/bin/python3 /var/www/html/config/actualizaini.py -c ' . $descripcion);
         $cont = 1;
     }
 } if ($tiempos != $tiempo) {
@@ -45,14 +47,17 @@ if ($senals != $senal) {
     if ($conn2->query($sql4) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";
     } else {
-        system("sudo /usr/bin/python3 /var/www/html/config/actualizaini.py -s $tiempo");
+        #system("sudo /usr/bin/python3 /var/www/html/config/actualizaini.py -s $tiempo");
         $cont = 1;
     }
 }
 
 if ($cont === 1) {
+    
+    #echo $comando;
+    shell_exec('sudo systemctl start actualiza.service');
+    shell_exec('sudo systemctl restart ramon.service');  
     echo "Datos Actualizados";
-    shell_exec('sudo systemctl restart ramon.service');
 } else {
 
     echo "No se ha cambiado nada";
