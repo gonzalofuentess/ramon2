@@ -24,7 +24,7 @@ include '../static/sesion.php';
                     <div class="row">
                         <div class="span7">
                             <header class="page-header">                             
-                                <h3>Configuración<br>
+                                <h3>Configuración <br>
                                     <small>Radio Monitoreo FM</small>
                                 </h3>
                             </header>
