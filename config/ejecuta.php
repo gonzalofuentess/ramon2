@@ -52,6 +52,7 @@ if ($senals != $senal) {
 if ($cont === 1) {
 
     echo "Datos Actualizados";
+    shell_exec('systemclt restart ramon.service');
 } else {
 
     echo "No se ha cambiado nada";
