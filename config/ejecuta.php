@@ -22,6 +22,7 @@ $cont = 0;
 
 if ($senals != $senal) {
     //echo "Debe Modificar la Frecuencia";    
+    shell_exec('python actualizaini.py -f'.$frecuencia);
     $sql2 = "UPDATE  ramon.radio set frecuencia=$senal where idradio=1";
     if ($conn2->query($sql2) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";
@@ -30,7 +31,7 @@ if ($senals != $senal) {
         $cont = 1;
     }
 } if ($descripcions != $descripcion) {
-
+    shell_exec('python actualizaini.py -c'.$comentario);  
     $sql3 = "UPDATE  ramon.radio set descripcion='$descripcion' where idradio=1";
     if ($conn2->query($sql3) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";
@@ -39,7 +40,7 @@ if ($senals != $senal) {
         $cont = 1;
     }
 } if ($tiempos != $tiempo) {
-
+    shell_exec('python actualizaini.py -s'.$tiempo);
     $sql4 = "UPDATE  ramon.radio set silencio=$tiempo where idradio=1";
     if ($conn2->query($sql4) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";
@@ -52,7 +53,7 @@ if ($senals != $senal) {
 if ($cont === 1) {
 
     echo "Datos Actualizados";
-    shell_exec('systemclt restart ramon.service');
+    shell_exec('sudo systemclt restart ramon.service');
 } else {
 
     echo "No se ha cambiado nada";
