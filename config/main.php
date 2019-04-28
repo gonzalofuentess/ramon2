@@ -14,34 +14,32 @@
 
                         /* Empezamos con el procedimiento de recuperación de una fila */
                         /* Lo primero es crear un objeto mysqli */
-                        $conn = new mysqli($servername, $username, $password,$dbname);
+                        $conn = new mysqli($servername, $username, $password, $dbname);
                         /* Y llamamos al procedimiento para recoger los datos */
                         /* Si falla imprimimos el error */
                         if (!($res = $conn->query("CALL radio()"))) {
                             echo "Falló la llamada: (" . $conn->errno . ") " . $conn->error;
                         }
                         /* E imprimimos el resultado para ver que el ejemplo ha funcionado */
-                        $salida = $res->fetch_assoc();                       
-                       
-                        
+                        $salida = $res->fetch_assoc();
                         ?>
                         <div class="input-prepend" id="form1">
                             <span class="add-on"><i class="icon-rss"></i></span>                         
-                            <input id="senal" class="span4" type="number" min="88.1" max="107.9" step="0.1" placeholder="88.1 - 107.9" value="<?php echo $salida["frecuencia"];?>" required>
+                            <input id="senal" class="span4" type="number" min="88.1" max="107.9" step="0.1" placeholder="88.1 - 107.9" value="<?php echo $salida["frecuencia"]; ?>" required>
                         </div>                        
                     </form>
                     <form class="form-inline">
                         <p>Descripción:</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-pencil"></i></span>
-                            <input id="descripcion" class="span4" type="text" maxlength="16" placeholder="Descripción Radio" maxlength="140" value="<?php echo $salida["descripcion"];?>" required>
+                            <input id="descripcion" class="span4" type="text" maxlength="16" placeholder="Descripción Radio" maxlength="140" value="<?php echo $salida["descripcion"]; ?>" required>
                         </div>                        
                     </form>
                     <form class="form-inline">
                         <p>Tiempo de Silencio:</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-pencil"></i></span>
-                            <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $salida["silencio"];?>" required>
+                            <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $salida["silencio"]; ?>" required>
                         </div>                        
                     </form>                    
                 </div>
@@ -108,21 +106,24 @@
                 <div class="box-content">                    
                     <form class="form-inline">
                         <p>Señal Baja</p>
-                        <div class="input-prepend">
+                        <div class="input-prepend">                                                      
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
                             <input class="span4" type="number" placeholder="Mínimo" value="0" readonly>
                         </div>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo">
-                        </div>
+                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" disabled><input class="span1" type="checkbox" id="bajacritical">
+                        </div> 
+                        ¿Activar?
                     </form>
+
                     <form class="form-inline">
                         <p>Señal Alta</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo">
+                            <input class="span4" type="number" placeholder="Mínimo" id=""><input class="span1" type="checkbox" id="mincritical">
                         </div>
+                        ¿Activar?
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
                             <input class="span4" type="number" placeholder="Máximo" value="70" readonly>
@@ -148,12 +149,13 @@
                         <p>Señal Baja</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo">
+                            <input class="span4" type="number" placeholder="Mínimo" disabled>
                         </div>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo">
+                            <input class="span4" type="number" placeholder="Máximo" id='bajawarningtext' disabled><input class="span1" type="checkbox" id="bajawarning">
                         </div>
+                        ¿Activar?
                     </form>
                     <form class="form-inline">
                         <p>Señal Alta</p>
@@ -178,32 +180,41 @@
         </div> 
     </div>
 </section>
+<script>
+
+    document.getElementById('bajacritical').onchange = function () {
+        document.getElementById('bajacriticaltext').disabled = !this.checked;        
+    };
+
+</script>
+
 
 <script>
 
     function hola(senal, descripcion, tiempo) {
-        
-        var anterior= <?php echo $salida["frecuencia"]; $conn->close();?>;
-        if(anterior!=senal){
+
+        var anterior = <?php echo $salida["frecuencia"];
+                        $conn->close();
+                        ?>;
+        if (anterior != senal) {
             var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
-        if (respuesta === true)
-            ejecutar(senal, descripcion, tiempo);
-        }        
-        else
+            if (respuesta === true)
+                ejecutar(senal, descripcion, tiempo);
+        } else
             ejecutar(senal, descripcion, tiempo);
     }
-    function ejecutar(senal,descripcion,tiempo){
-       
-       $.ajax({
-                    url: "ejecuta.php",
-                    type: "POST",
-                    data: "senal=" + senal + "&descripcion=" + descripcion + "&tiempo=" + tiempo,
-                    success: function (resp) {
-                        alert(resp);
-                        //$('#resultado').html(resp)
-                    }
-                });
-       
+    function ejecutar(senal, descripcion, tiempo) {
+
+        $.ajax({
+            url: "ejecuta.php",
+            type: "POST",
+            data: "senal=" + senal + "&descripcion=" + descripcion + "&tiempo=" + tiempo,
+            success: function (resp) {
+                alert(resp);
+                //$('#resultado').html(resp)
+            }
+        });
+
     }
 
 </script>

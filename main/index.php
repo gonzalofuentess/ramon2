@@ -7,6 +7,12 @@ include '../static/sesion.php';
     <head>
         <?php include '../static/head.html'; ?>
 
+        <style>
+            #chart {
+                max-width: 380px;
+                margin: 35px auto;
+            }
+        </style>
 
     </head>
     <body>
@@ -45,7 +51,7 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
-                <div id="chart-container"></div>
+                <?php include './main.html'; ?>
 
 
             </div>
@@ -66,9 +72,9 @@ include '../static/sesion.php';
 
         <?php include '../static/script.html'; ?>
 
-       
 
-       
+
+
 
     </body>
 
