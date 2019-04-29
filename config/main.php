@@ -57,44 +57,8 @@
                     <i class="icon-signal"></i>
                     <h5>Señal FM</h5>
                 </div>
-                <div class="box-content">
-               <!--     <script>
-                        google.charts.load('current', {'packages': ['gauge']});
-                        google.charts.setOnLoadCallback(drawChart);
-                        function drawChart() {
-
-                            var data = google.visualization.arrayToDataTable([
-                                ['Señal', 44]
-                            ], true);
-
-                            var options = {
-                                width: 200, height: 220,
-                                redFrom: 60, redTo: 100,
-                                yellowFrom: 50, yellowTo: 60,
-                                minorTicks: 15
-                            };
-
-                            var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-
-                            chart.draw(data, options);
-
-                            setInterval(function () {
-                                data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
-                                chart.draw(data, options);
-                            }, 1300)
-                        }
-                    </script> 
-
-                    <div id="chart_div" style="width: 400px; height: 120px;"></div>  -->
-
-
-                    <canvas id="chart-direction"></canvas>
-
-
-                    <br>
-                    <br>
-                    <br>
-                    <br>
+                <div class="box-content">        
+                    <canvas id="chart-direction"></canvas>                   
                 </div>               
             </div>
         </div>
@@ -192,8 +156,6 @@
     };
 
 </script>
-
-
 <script>
 
     function hola(senal, descripcion, tiempo) {
@@ -296,16 +258,11 @@
             }
         }
     };
-
     window.onload = function () {
         var ctx = document.getElementById('chart-direction').getContext('2d');
         window.direction = new Chart(ctx, configDirection);
 
-
-
-
     };
-
     setInterval(function () {
         var JSON = $.ajax({
             url: "senal.php",
@@ -315,5 +272,4 @@
         configDirection.data.current = Respuesta.senal;
         window.direction.update();
     }, 1300);
-
 </script>
