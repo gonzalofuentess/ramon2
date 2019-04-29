@@ -8,7 +8,8 @@ include '../static/sesion.php';
         <?php include '../static/head.html'; ?>
 
         <script type="text/javascript" src="../assets/google/loader.js"></script>
-
+        <script src="../assets/charts/Chart.js"></script>
+    <script src="../assets/charts/gauge.js"></script>
 
 
     </head>

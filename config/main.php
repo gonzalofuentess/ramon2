@@ -58,7 +58,7 @@
                     <h5>Señal FM</h5>
                 </div>
                 <div class="box-content">
-                    <script>
+               <!--     <script>
                         google.charts.load('current', {'packages': ['gauge']});
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
@@ -83,9 +83,14 @@
                                 chart.draw(data, options);
                             }, 1300)
                         }
-                    </script>
+                    </script> 
 
-                    <div id="chart_div" style="width: 400px; height: 120px;"></div> 
+                    <div id="chart_div" style="width: 400px; height: 120px;"></div>  -->
+
+                  
+                        <canvas id="chart-direction"></canvas>
+                   
+
                     <br>
                     <br>
                     <br>
@@ -183,7 +188,7 @@
 <script>
 
     document.getElementById('bajacritical').onchange = function () {
-        document.getElementById('bajacriticaltext').disabled = !this.checked;        
+        document.getElementById('bajacriticaltext').disabled = !this.checked;
     };
 
 </script>
@@ -193,7 +198,8 @@
 
     function hola(senal, descripcion, tiempo) {
 
-        var anterior = <?php echo $salida["frecuencia"];
+        var anterior = <?php
+                        echo $salida["frecuencia"];
                         $conn->close();
                         ?>;
         if (anterior != senal) {
@@ -217,4 +223,84 @@
 
     }
 
+</script>
+
+<!-- Resources -->
+
+
+<!-- Chart code -->
+
+<script>
+    Chart.defaults.global.animation.duration = 0;
+    Chart.defaults.global.defaultFontSize = 12;
+
+    var configDirection = {
+        "type": "gauge",
+        "data": {
+            "datasets": [
+                {
+                    "data": [],
+                    "backgroundColor": [],
+                    "borderWidth": 0,
+                    "hoverBackgroundColor": [],
+                    "hoverBorderWidth": 0
+                }
+            ],
+            "current": 21,
+        },
+        "options": {
+            "panel": {
+                "min": 0,
+                "max": 70,
+                "tickInterval": 1,
+                "tickColor": "rgb(0, 0, 0)",
+                "tickOuterRadius": 99,
+                "tickInnerRadius": 95,
+                "scales": [0, 10, 20, 30, 40, 50, 60, 70, ],
+                "scaleColor": "rgb(0, 0, 0)",
+                "scaleBackgroundColor": "rgb(105, 125, 151)",
+                "scaleTextRadius": 80,
+                "scaleTextSize": 8,
+                "scaleTextColor": "rgba(0, 0, 0, 1)",
+                "scaleOuterRadius": 99,
+                "scaleInnerRadius": 93,
+            },
+            "needle": {
+                "lengthRadius": 100,
+                "circleColor": "rgba(188, 188, 188, 1)",
+                "color": "rgba(180, 0, 0, 0.8)",
+                "circleRadius": 7,
+                "width": 5,
+            },
+            "cutoutPercentage": 90,
+            "rotation": -Math.PI,
+            "circumference": Math.PI,
+            "legend": {
+                "display": false,
+                "text": "legend"
+            },
+            "tooltips": {
+                "enabled": false
+            },
+            "title": {
+                "display": true,
+                "text": "Señal",
+                "position": "bottom"
+            },
+            "animation": {
+                "animateRotate": false,
+                "animateScale": false
+            },
+            "hover": {
+                "mode": null
+            }
+        }
+    };
+
+    window.onload = function () {
+        var ctx = document.getElementById('chart-direction').getContext('2d');
+        window.direction = new Chart(ctx, configDirection);
+    };
+
+ 
 </script>
