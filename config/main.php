@@ -87,9 +87,9 @@
 
                     <div id="chart_div" style="width: 400px; height: 120px;"></div>  -->
 
-                  
-                        <canvas id="chart-direction"></canvas>
-                   
+
+                    <canvas id="chart-direction"></canvas>
+
 
                     <br>
                     <br>
@@ -300,7 +300,20 @@
     window.onload = function () {
         var ctx = document.getElementById('chart-direction').getContext('2d');
         window.direction = new Chart(ctx, configDirection);
+
+
+
+
     };
 
- 
+    setInterval(function () {
+        var JSON = $.ajax({
+            url: "senal.php",
+            dataType: 'json',
+            async: false}).responseText;
+        var Respuesta = jQuery.parseJSON(JSON);
+        configDirection.data.current = Respuesta.senal;
+        window.direction.update();
+    }, 1300);
+
 </script>
