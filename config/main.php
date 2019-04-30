@@ -51,6 +51,87 @@
                 </div>
             </div>
         </div>
+        <script>
+            Chart.defaults.global.animation.duration = 0;
+            Chart.defaults.global.defaultFontSize = 12;
+
+            var configDirection = {
+                "type": "gauge",
+                "data": {
+                    "datasets": [
+                        {
+                            "data": [],
+                            "backgroundColor": [],
+                            "borderWidth": 0,
+                            "hoverBackgroundColor": [],
+                            "hoverBorderWidth": 0
+                        }
+                    ],
+                    "current": 35,
+                },
+                "options": {
+                    "panel": {
+                        "min": 0,
+                        "max": 70,
+                        "tickInterval": 1,
+                        "tickColor": "rgb(0, 0, 0)",
+                        "tickOuterRadius": 99,
+                        "tickInnerRadius": 95,
+                        "scales": [0, 10, 20, 30, 40, 50, 60, 70, ],
+                        "scaleColor": "rgb(0, 0, 0)",
+                        "scaleBackgroundColor": "rgb(105, 125, 151)",
+                        "scaleTextRadius": 80,
+                        "scaleTextSize": 8,
+                        "scaleTextColor": "rgba(0, 0, 0, 1)",
+                        "scaleOuterRadius": 99,
+                        "scaleInnerRadius": 93,
+                    },
+                    "needle": {
+                        "lengthRadius": 100,
+                        "circleColor": "rgba(188, 188, 188, 1)",
+                        "color": "rgba(180, 0, 0, 0.8)",
+                        "circleRadius": 7,
+                        "width": 5,
+                    },
+                    "cutoutPercentage": 90,
+                    "rotation": -Math.PI,
+                    "circumference": Math.PI,
+                    "legend": {
+                        "display": false,
+                        "text": "legend"
+                    },
+                    "tooltips": {
+                        "enabled": false
+                    },
+                    "title": {
+                        "display": true,
+                        "text": "Señal",
+                        "position": "bottom"
+                    },
+                    "animation": {
+                        "animateRotate": false,
+                        "animateScale": false
+                    },
+                    "hover": {
+                        "mode": null
+                    }
+                }
+            };
+            window.onload = function () {
+                var ctx = document.getElementById('chart-direction').getContext('2d');
+                window.direction = new Chart(ctx, configDirection);
+
+            };
+            setInterval(function () {
+                var JSON = $.ajax({
+                    url: "senal.php",
+                    dataType: 'json',
+                    async: false}).responseText;
+                var Respuesta = jQuery.parseJSON(JSON);
+                configDirection.data.current = Respuesta.senal;
+                window.direction.update();
+            }, 1300);
+        </script>
         <div class="span6">
             <div class="box">
                 <div class="box-header">
@@ -192,84 +273,3 @@
 
 <!-- Chart code -->
 
-<script>
-    Chart.defaults.global.animation.duration = 0;
-    Chart.defaults.global.defaultFontSize = 12;
-
-    var configDirection = {
-        "type": "gauge",
-        "data": {
-            "datasets": [
-                {
-                    "data": [],
-                    "backgroundColor": [],
-                    "borderWidth": 0,
-                    "hoverBackgroundColor": [],
-                    "hoverBorderWidth": 0
-                }
-            ],
-            "current": 21,
-        },
-        "options": {
-            "panel": {
-                "min": 0,
-                "max": 70,
-                "tickInterval": 1,
-                "tickColor": "rgb(0, 0, 0)",
-                "tickOuterRadius": 99,
-                "tickInnerRadius": 95,
-                "scales": [0, 10, 20, 30, 40, 50, 60, 70, ],
-                "scaleColor": "rgb(0, 0, 0)",
-                "scaleBackgroundColor": "rgb(105, 125, 151)",
-                "scaleTextRadius": 80,
-                "scaleTextSize": 8,
-                "scaleTextColor": "rgba(0, 0, 0, 1)",
-                "scaleOuterRadius": 99,
-                "scaleInnerRadius": 93,
-            },
-            "needle": {
-                "lengthRadius": 100,
-                "circleColor": "rgba(188, 188, 188, 1)",
-                "color": "rgba(180, 0, 0, 0.8)",
-                "circleRadius": 7,
-                "width": 5,
-            },
-            "cutoutPercentage": 90,
-            "rotation": -Math.PI,
-            "circumference": Math.PI,
-            "legend": {
-                "display": false,
-                "text": "legend"
-            },
-            "tooltips": {
-                "enabled": false
-            },
-            "title": {
-                "display": true,
-                "text": "Señal",
-                "position": "bottom"
-            },
-            "animation": {
-                "animateRotate": false,
-                "animateScale": false
-            },
-            "hover": {
-                "mode": null
-            }
-        }
-    };
-    window.onload = function () {
-        var ctx = document.getElementById('chart-direction').getContext('2d');
-        window.direction = new Chart(ctx, configDirection);
-
-    };
-    setInterval(function () {
-        var JSON = $.ajax({
-            url: "senal.php",
-            dataType: 'json',
-            async: false}).responseText;
-        var Respuesta = jQuery.parseJSON(JSON);
-        configDirection.data.current = Respuesta.senal;
-        window.direction.update();
-    }, 1300);
-</script>
