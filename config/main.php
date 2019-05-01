@@ -38,7 +38,7 @@
                     <form class="form-inline">
                         <p>Tiempo de Silencio:</p>
                         <div class="input-prepend">
-                            <span class="add-on"><i class="icon-pencil"></i></span>
+                            <span class="add-on"><i class="icon-pencil"></i></span>                           
                             <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $salida["silencio"]; ?>" required>
                         </div>                        
                     </form>                    
@@ -150,12 +150,12 @@
         <div class="span8">        
             <div class="box">
                 <div class="box-header">
-                    <i class="icon-remove-sign"></i>
-                    <h5>Señal Crítica:</h5>
+                    <i class="icon-warning-sign"></i>
+                    <h5>Señal Baja Crítica:</h5>
                 </div>
                 <div class="box-content">                    
                     <form class="form-inline">
-                        <p>Señal Baja</p>
+                        <p>Señal Baja</p>                         
                         <div class="input-prepend">                                                      
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
                             <input class="span4" type="number" placeholder="Mínimo" value="0" readonly>
@@ -165,20 +165,7 @@
                             <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" disabled><input class="span1" type="checkbox" id="bajacritical">
                         </div> 
                         ¿Activar?
-                    </form>
-
-                    <form class="form-inline">
-                        <p>Señal Alta</p>
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo" id=""><input class="span1" type="checkbox" id="mincritical">
-                        </div>
-                        ¿Activar?
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo" value="70" readonly>
-                        </div>
-                    </form>                 
+                    </form>              
                 </div>
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">
@@ -192,32 +179,21 @@
             <div class="box">
                 <div class="box-header">
                     <i class="icon-warning-sign"></i>
-                    <h5>Señal Warning:</h5>
+                    <h5>Señal Alta Crítica:</h5>
                 </div>
                 <div class="box-content">
-                    <form class="form-inline">
-                        <p>Señal Baja</p>
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo" disabled>
-                        </div>
-                        <div class="input-prepend">
-                            <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo" id='bajawarningtext' disabled><input class="span1" type="checkbox" id="bajawarning">
-                        </div>
-                        ¿Activar?
-                    </form>
                     <form class="form-inline">
                         <p>Señal Alta</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo">
+                            <input class="span4" type="number" placeholder="Mínimo" id="altacriticaltext" disabled><input class="span1" type="checkbox" id="altacritical">
                         </div>
+                        ¿Activar?
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo">
-                        </div>
-                    </form>                 
+                            <input class="span4" type="number" placeholder="Máximo" value="70" readonly>
+                        </div>                        
+                    </form>                                
                 </div>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary">
@@ -234,6 +210,11 @@
 
     document.getElementById('bajacritical').onchange = function () {
         document.getElementById('bajacriticaltext').disabled = !this.checked;
+    };
+
+
+  document.getElementById('altacritical').onchange = function () {
+        document.getElementById('altacriticaltext').disabled = !this.checked;
     };
 
 </script>
