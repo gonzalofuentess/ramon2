@@ -57,8 +57,7 @@ if ($cont === 1) {
     #echo $comando;
     shell_exec('sudo systemctl start actualiza.service');
     shell_exec('sudo systemctl restart ramon.service');  
-    echo "Datos Actualizados";
-    header('Location: http://localhost/ramon2/config/');
+    echo "Datos Actualizados";    
 } else {
 
     echo "No se ha cambiado nada";
