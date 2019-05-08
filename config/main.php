@@ -34,7 +34,9 @@
                             <span class="add-on"><i class="icon-pencil"></i></span>
                             <input id="descripcion" class="span4" type="text" maxlength="16" placeholder="Descripción Radio" maxlength="140" value="<?php echo $salida["descripcion"]; ?>" required>
                         </div>                        
-                    </form>
+                    </form>               
+
+
                     <form class="form-inline">
                         <p>Tiempo de Silencio:</p>
                         <div class="input-prepend">
@@ -67,7 +69,10 @@
                             "hoverBorderWidth": 0
                         }
                     ],
-                    "current": 35,
+                    "current": <?php $data = file_get_contents("senal.json");
+                                 $datos = json_decode($data, true);
+                                 echo $datos['senal'];
+                              ?>,
                 },
                 "options": {
                     "panel": {
@@ -161,12 +166,34 @@
                             <input class="span4" type="number" placeholder="Mínimo" value="0" readonly>
                         </div>
                         <div class="input-prepend">
+                            <?php
+                            require_once '../static/modelo.php';
+                            $modelo = new Consulta();
+                            $arreglo = $modelo->buscaConfiguracion();
+                            ?>
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" disabled><input class="span1" type="checkbox" id="bajacritical">
-                        </div> 
+                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
+                            if (($arreglo[1]['estado']) == 0) {
+                                echo "disabled";
+                            }
+                            ?>><input class="span1" type="checkbox" id="bajacritical" <?php
+                                   if (($arreglo[1]['estado']) == 1) {
+                                       echo "checked";
+                                   }
+                                   ?>>
+                        </div>
+
                         ¿Activar?
-                    </form>              
+                    </form>   
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
                 </div>
+
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">
                         <i class="icon-ok"></i>
@@ -213,7 +240,7 @@
     };
 
 
-  document.getElementById('altacritical').onchange = function () {
+    document.getElementById('altacritical').onchange = function () {
         document.getElementById('altacriticaltext').disabled = !this.checked;
     };
 
@@ -223,10 +250,10 @@
     function hola(senal, descripcion, tiempo) {
 
         var anterior = <?php
-                        echo $salida["frecuencia"];
-                        $conn->close();
-                        ?>;
-        if (anterior != senal) {
+                                   echo $salida["frecuencia"];
+                                   $conn->close();
+                                   ?>;
+        if (anterior !== senal) {
             var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
             if (respuesta === true)
                 ejecutar(senal, descripcion, tiempo);

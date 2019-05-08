@@ -16,92 +16,15 @@
                     </div>
                 </div>
                 <div class="span8">
-                    <div class="box pattern pattern-sandstone">
+                    <div class="box">
                         <div class="box-header">
-                            <i class="icon-table"></i>
+                            <i class="icon-check"></i>
                             <h5>
-                                Table
+                                Alertas Última Semana
                             </h5>
                         </div>
-                        <div class="box-content box-table">
-                            <table id="sample-table" class="table table-hover table-bordered tablesorter">
-                                <thead>
-                                    <tr>
-                                        <th>Version</th>
-                                        <th>Browser</th>
-                                        <th class="td-actions"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>7.0</td>
-                                        <td>Internet
-                                            Explorer</td>
-                                        <td class="td-actions">
-                                            <a href="javascript:;" class="btn btn-small btn-info">
-                                                <i class="btn-icon-only icon-ok"></i>
-                                            </a>
-
-                                            <a href="javascript:;" class="btn btn-small btn-danger">
-                                                <i class="btn-icon-only icon-remove"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>4.0</td>
-                                        <td>Firefox</td>
-                                        <td class="td-actions">
-                                            <a href="javascript:;" class="btn btn-small btn-info">
-                                                <i class="btn-icon-only icon-ok"></i>
-                                            </a>
-
-                                            <a href="javascript:;" class="btn btn-small btn-danger">
-                                                <i class="btn-icon-only icon-remove"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Latest</td>
-                                        <td>Safari</td>
-                                        <td class="td-actions">
-                                            <a href="javascript:;" class="btn btn-small btn-info">
-                                                <i class="btn-icon-only icon-ok"></i>
-                                            </a>
-
-                                            <a href="javascript:;" class="btn btn-small btn-danger">
-                                                <i class="btn-icon-only icon-remove"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Latest</td>
-                                        <td>Chrome</td>
-                                        <td class="td-actions">
-                                            <a href="javascript:;" class="btn btn-small btn-info">
-                                                <i class="btn-icon-only icon-ok"></i>
-                                            </a>
-
-                                            <a href="javascript:;" class="btn btn-small btn-danger">
-                                                <i class="btn-icon-only icon-remove"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>11</td>
-                                        <td>
-                                            Opera</td>
-                                        <td class="td-actions">
-                                            <a href="javascript:;" class="btn btn-small btn-info">
-                                                <i class="btn-icon-only icon-ok"></i>
-                                            </a>
-
-                                            <a href="javascript:;" class="btn btn-small btn-danger">
-                                                <i class="btn-icon-only icon-remove"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                        <div class="box-content">
+                            <div id="barras"></div>                           
                         </div>
                     </div>
                 </div>
@@ -132,45 +55,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="span8">
-
-
-
-
-
-
-                    <div class="blockoff-left">
-                        <div id="barchart"></div>
-                    </div>
-                </div>
+              
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="span16">
-            <div class="well well-small well-shadow">
-                <legend class="lead">Shadow Well<code>class="well well-small well-shadow"</code></legend>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="span16">
-            <div class="box">
-                <div class="box-content">
-                    <legend class="lead">
-                        Box Component
-                    </legend>
-                    <code style="background: none;border: none;"><span class="nt">&lt;div</span>
-                        <span class="na">class=</span><span>"box"</span><span>&gt;</span>
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&lt;div</span> <span>class=</span><span>"box-content"</span><span>&gt;</span>
-                        <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>&lt;/div&gt;</span>
-                        <br/><span>&lt;/div&gt;</span>
-                    </code><br/>
-                </div>
-            </div>
-        </div>
-    </div>
+
+
 </section>
 
 <script crossorigin src="../assets/charts/react.production.min.js"></script>
@@ -213,18 +104,88 @@
         render() {
             return (
                     <div>
-                                        <div id="chart">
-                                        <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width="380" />
-                                </div>
-                                    <div id="html-dist">
-                                        </div>
-                                        </div>
+                    <div id="chart">
+                        <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width="380" />
+                            </div>
+                        <div id="html-dist">
+                        </div>
+                            </div>
                     );
         }
     }
 
     const domContainer = document.querySelector('#app');
     ReactDOM.render(React.createElement(PieChart), domContainer);
+
+</script>
+<script type="text/babel">
+
+    class BarChart extends React.Component {
+
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                options: {
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded'
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                    },
+                    yaxis: {
+                        title: {
+                            text: '(Alertas)'
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Silencio',
+                        data: [0, 1, 4, 11, 2, 0]
+                    }, {
+                        name: 'Señal',
+                        data: [0, 0, 0, 0, 9, 8, 7]
+                    }],
+            }
+        }
+
+        render() {
+            return (
+                    <div>
+<div id="chart">
+<ReactApexChart options={this.state.options} series={this.state.series} type="bar" height="350" />
+        </div>
+            <div id="html-dist">
+            </div>
+                </div>
+                    );
+        }
+    }
+
+    const domContainer = document.querySelector('#barras');
+    ReactDOM.render(React.createElement(BarChart), domContainer);
 
 </script>
 

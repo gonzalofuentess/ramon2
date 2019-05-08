@@ -10,7 +10,7 @@ include '../static/sesion.php';
         <script type="text/javascript" src="../assets/google/loader.js"></script>
         <script src="../assets/charts/Chart.js"></script>
     <script src="../assets/charts/gauge.js"></script>
-
+    <link rel="stylesheet" type="text/css" href="../assets/css/boton.css">
 
     </head>
     <body>
@@ -45,7 +45,8 @@ include '../static/sesion.php';
                                                 case "correo":
                                                     ?>
                                                     <li><a href="../config/"><i class="icon-home"></i>Radio</a></li>
-                                                    <li class="active"><a><i class="icon-envelope-alt"></i>Correo</a></li>                                                   
+                                                    <li class="active"><a><i class="icon-envelope-alt"></i>Correo</a></li> 
+                                                    <li class="active"><a><i class="icon-home"></i>Comandos</a></li> 
                                                     <?php
                                                     break;
                                             }
@@ -53,6 +54,7 @@ include '../static/sesion.php';
                                             ?>
                                             <li class = "active"><a><i class="icon-home"></i>Radio </a></li>
                                             <li><a href = "../config/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li>
+                                            <li class="active"><a><i class="icon-home"></i>Comandos</a></li> 
                                         <?php }
                                         ?>
 
