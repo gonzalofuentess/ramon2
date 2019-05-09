@@ -46,7 +46,7 @@
                     </form>                    
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="hola(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
+                    <button type="button" class="btn btn-primary" onclick="radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -69,10 +69,11 @@
                             "hoverBorderWidth": 0
                         }
                     ],
-                    "current": <?php $data = file_get_contents("senal.json");
-                                 $datos = json_decode($data, true);
-                                 echo $datos['senal'];
-                              ?>,
+                    "current": <?php
+                        $data = file_get_contents("senal.json");
+                        $datos = json_decode($data, true);
+                        echo $datos['senal'];
+                        ?>,
                 },
                 "options": {
                     "panel": {
@@ -186,7 +187,7 @@
                         ¿Activar?
                     </form>   
                     <div class="onoffswitch">
-                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-textOn="On" data-textOff="Off">
                         <label class="onoffswitch-label" for="myonoffswitch">
                             <span class="onoffswitch-inner"></span>
                             <span class="onoffswitch-switch"></span>
@@ -195,7 +196,7 @@
                 </div>
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" onclick="baja(document.getElementById('bajacriticaltext').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -235,7 +236,7 @@
 </section>
 <script>
 
-    document.getElementById('bajacritical').onchange = function () {
+    document.getElementById('myonoffswitch').onchange = function () {
         document.getElementById('bajacriticaltext').disabled = !this.checked;
     };
 
@@ -247,7 +248,7 @@
 </script>
 <script>
 
-    function hola(senal, descripcion, tiempo) {
+    function radio(senal, descripcion, tiempo) {
 
         var anterior = <?php
                                    echo $salida["frecuencia"];
@@ -269,10 +270,40 @@
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)
+                if (resp === "Datos Actualizados") {
+                    location.reload();
+                }
+
             }
         });
 
     }
+
+    function baja(bajacriticaltext) {
+       
+       
+       
+       
+
+        $.ajax({
+            url: "baja.php",
+            type: "POST",
+            data: "baja=" + document.getElementById('myonoffswitch').checked + "&bajacriticaltext=" + bajacriticaltext,
+            success: function (resp) {
+                alert(resp);
+                //$('#resultado').html(resp)
+                //if(resp==="Datos Actualizados"){                    
+                //   location.reload(); 
+                //}
+
+            }
+        });
+
+    }
+
+
+
+
 
 </script>
 
