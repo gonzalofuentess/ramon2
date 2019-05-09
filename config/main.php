@@ -10,29 +10,22 @@
                     <form class="form-inline">
                         <p>Frecuencia:</p>
                         <?php
-                        require('../static/conexion.php');
-
-                        /* Empezamos con el procedimiento de recuperación de una fila */
-                        /* Lo primero es crear un objeto mysqli */
-                        $conn = new mysqli($servername, $username, $password, $dbname);
-                        /* Y llamamos al procedimiento para recoger los datos */
-                        /* Si falla imprimimos el error */
-                        if (!($res = $conn->query("CALL radio()"))) {
-                            echo "Falló la llamada: (" . $conn->errno . ") " . $conn->error;
-                        }
-                        /* E imprimimos el resultado para ver que el ejemplo ha funcionado */
-                        $salida = $res->fetch_assoc();
+                        require_once '../static/modelo.php';
+                        $modelo = new Consulta();
+                         $radio = $modelo->buscaRadio();
+                         $arreglo = $modelo->buscaConfiguracion();
+                        
                         ?>
                         <div class="input-prepend" id="form1">
                             <span class="add-on"><i class="icon-rss"></i></span>                         
-                            <input id="senal" class="span4" type="number" min="88.1" max="107.9" step="0.1" placeholder="88.1 - 107.9" value="<?php echo $salida["frecuencia"]; ?>" required>
+                            <input id="senal" class="span4" type="number" min="88.1" max="107.9" step="0.1" placeholder="88.1 - 107.9" value="<?php echo $radio[0]['frecuencia']; ?>" required>
                         </div>                        
                     </form>
                     <form class="form-inline">
                         <p>Descripción:</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-pencil"></i></span>
-                            <input id="descripcion" class="span4" type="text" maxlength="16" placeholder="Descripción Radio" maxlength="140" value="<?php echo $salida["descripcion"]; ?>" required>
+                            <input id="descripcion" class="span4" type="text" maxlength="16" placeholder="Descripción Radio" maxlength="140" value="<?php echo $radio[0]["descripcion"]; ?>" required>
                         </div>                        
                     </form>               
 
@@ -41,7 +34,7 @@
                         <p>Tiempo de Silencio:</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-pencil"></i></span>                           
-                            <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $salida["silencio"]; ?>" required>
+                            <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $arreglo[0]["umbral"]; ?>" required>
                         </div>                        
                     </form>                    
                 </div>
@@ -167,27 +160,21 @@
                             <input class="span4" type="number" placeholder="Mínimo" value="0" readonly>
                         </div>
                         <div class="input-prepend">
-                            <?php
-                            require_once '../static/modelo.php';
-                            $modelo = new Consulta();
-                            $arreglo = $modelo->buscaConfiguracion();
-                            ?>
+                            
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
                             <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
                             if (($arreglo[1]['estado']) == 0) {
                                 echo "disabled";
                             }
-                            ?>><input class="span1" type="checkbox" id="bajacritical" <?php
-                                   if (($arreglo[1]['estado']) == 1) {
-                                       echo "checked";
-                                   }
-                                   ?>>
+                            ?>>
                         </div>
-
-                        ¿Activar?
                     </form>   
                     <div class="onoffswitch">
-                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" data-textOn="On" data-textOff="Off">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <?php
+                            if (($arreglo[1]['estado']) == 1) {
+                                echo "checked";
+                            }
+                            ?>>
                         <label class="onoffswitch-label" for="myonoffswitch">
                             <span class="onoffswitch-inner"></span>
                             <span class="onoffswitch-switch"></span>
@@ -251,9 +238,9 @@
     function radio(senal, descripcion, tiempo) {
 
         var anterior = <?php
-                                   echo $salida["frecuencia"];
-                                   $conn->close();
-                                   ?>;
+                        echo $salida["frecuencia"];
+                        $conn->close();
+                            ?>;
         if (anterior !== senal) {
             var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
             if (respuesta === true)
@@ -280,10 +267,10 @@
     }
 
     function baja(bajacriticaltext) {
-       
-       
-       
-       
+
+
+
+
 
         $.ajax({
             url: "baja.php",
