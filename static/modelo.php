@@ -94,6 +94,16 @@ class Consulta {
         return $rawdata;
         
     }
+    
+    function actualizaBaja($baja, $activo){
+        $conexion = $this->conectarBD();
+        $sql = "UPDATE  ramon.tipo_alerta set umbral=$baja, estado=$activo  where idtipo=2";
+        $conexion->query($sql);
+        
+        
+        $this->desconectarBD($conexion);
+        
+    }
 
 }
 

@@ -12,9 +12,8 @@
                         <?php
                         require_once '../static/modelo.php';
                         $modelo = new Consulta();
-                         $radio = $modelo->buscaRadio();
-                         $arreglo = $modelo->buscaConfiguracion();
-                        
+                        $radio = $modelo->buscaRadio();
+                        $arreglo = $modelo->buscaConfiguracion();
                         ?>
                         <div class="input-prepend" id="form1">
                             <span class="add-on"><i class="icon-rss"></i></span>                         
@@ -160,22 +159,22 @@
                             <input class="span4" type="number" placeholder="Mínimo" value="0" readonly>
                         </div>
                         <div class="input-prepend">
-                            
+
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
                             <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
                             if (($arreglo[1]['estado']) == 0) {
                                 echo "disabled";
                             }
-                            ?>>
+                            ?> >
                         </div>
                     </form>   
                     <div class="onoffswitch">
-                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" <?php
-                            if (($arreglo[1]['estado']) == 1) {
-                                echo "checked";
-                            }
-                            ?>>
-                        <label class="onoffswitch-label" for="myonoffswitch">
+                        <input type="checkbox" name="switchbaja" class="onoffswitch-checkbox" id="switchbaja" <?php
+                        if (($arreglo[1]['estado']) == 1) {
+                            echo "checked";
+                        }
+                        ?>>
+                        <label class="onoffswitch-label" for="switchbaja">
                             <span class="onoffswitch-inner"></span>
                             <span class="onoffswitch-switch"></span>
                         </label>
@@ -201,14 +200,28 @@
                         <p>Señal Alta</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo" id="altacriticaltext" disabled><input class="span1" type="checkbox" id="altacritical">
-                        </div>
-                        ¿Activar?
+                            <input class="span4" type="number" placeholder="Mínimo" id="altacriticaltext" value="<?php echo $arreglo[2]['umbral']; ?>" <?php
+                            if (($arreglo[2]['estado']) == 0) {
+                                echo "disabled";
+                            }
+                            ?>>
+                        </div>                       
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
                             <input class="span4" type="number" placeholder="Máximo" value="70" readonly>
                         </div>                        
-                    </form>                                
+                    </form>  
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="switchalta" class="onoffswitch-checkbox" id="switchalta" <?php
+                        if (($arreglo[2]['estado']) == 1) {
+                            echo "checked";
+                        }
+                        ?>>
+                        <label class="onoffswitch-label" for="switchalta">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
                 </div>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary">
@@ -223,12 +236,12 @@
 </section>
 <script>
 
-    document.getElementById('myonoffswitch').onchange = function () {
+    document.getElementById('switchbaja').onchange = function () {
         document.getElementById('bajacriticaltext').disabled = !this.checked;
     };
 
 
-    document.getElementById('altacritical').onchange = function () {
+    document.getElementById('switchalta').onchange = function () {
         document.getElementById('altacriticaltext').disabled = !this.checked;
     };
 
@@ -237,11 +250,9 @@
 
     function radio(senal, descripcion, tiempo) {
 
-        var anterior = <?php
-                        echo $salida["frecuencia"];
-                        $conn->close();
-                            ?>;
-        if (anterior !== senal) {
+        var anterior = <?php echo $radio[0]['frecuencia']; ?>;        
+       
+        if (parseFloat(anterior) !== parseFloat(senal)) {
             var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
             if (respuesta === true)
                 ejecutar(senal, descripcion, tiempo);
@@ -267,21 +278,16 @@
     }
 
     function baja(bajacriticaltext) {
-
-
-
-
-
         $.ajax({
             url: "baja.php",
             type: "POST",
-            data: "baja=" + document.getElementById('myonoffswitch').checked + "&bajacriticaltext=" + bajacriticaltext,
+            data: "baja=" + document.getElementById('switchbaja').checked + "&bajacriticaltext=" + bajacriticaltext,
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)
-                //if(resp==="Datos Actualizados"){                    
-                //   location.reload(); 
-                //}
+                if(resp==="Datos Actualizados"){                    
+                   location.reload(); 
+                }
 
             }
         });
