@@ -35,15 +35,10 @@ class Consulta {
             if (!$result = mysqli_query($conexion, $sql)) {
                 die();
             }
-            $rawdata = array();
-            $i = 0;
-
-            while ($row = mysqli_fetch_array($result)) {
-                $rawdata[$i] = $row;
-                $i++;
-            }
+            $row = mysqli_fetch_array($result);
+            
             $this->desconectarBD($conexion);
-            return $rawdata[0][0];
+            return $row[0][0];
         } catch (Exception $ex) {
             return 2;
         }

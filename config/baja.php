@@ -18,6 +18,9 @@ if ($baja == "true") {
 
 $modelo->actualizaBaja($bajacriticaltext, $estado);
 
+shell_exec('sudo systemctl start actualiza.service');
+sleep(1); 
+shell_exec('sudo systemctl restart alertas.service');
 echo "Datos Actualizados";
 
 

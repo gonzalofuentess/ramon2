@@ -48,7 +48,7 @@ if ($senals != $senal) {
 }
 
 if ($cont === 1) {   
-    shell_exec('sudo systemctl start actualiza.service');
+    #shell_exec('sudo systemctl start actualiza.service');
     shell_exec('sudo systemctl restart ramon.service');  
     echo "Datos Actualizados";    
 } else {
