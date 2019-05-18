@@ -1,0 +1,59 @@
+
+consulta::actualizabaja
+static/modelo.php] ]("1*E
+2
+
+modelo.php"2
+
+static/modelo.phpe e(
+implicit return*Ž
+1
+static/modelo.php^ ^((?=
+
+static/modelo.php^ ^('
+%1*
+
+consulta2
+conectarbd:
+8
+
+static/modelo.php^ ^('
+	$conexion"__id*
+
+%1˜
+•
+
+static/modelo.php_ _([
+%2"__concat*)'
+%UPDATE  ramon.tipo_alerta set umbral=*
+	, estado=*
+  where idtipo=2*	
+
+$baja*
+	
+$activo5
+3
+
+static/modelo.php_ _([
+$sql"__id*
+
+%2EC
+
+static/modelo.php` `(
+%3*
+
+	$conexion*
+
+$sql2queryQO
+
+static/modelo.phpc c('
+%4*
+
+consulta*
+
+	$conexion2desconectarbd*
+2:
+$baja:	
+$activoB
+
+consulta
