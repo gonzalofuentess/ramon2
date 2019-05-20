@@ -7,10 +7,10 @@ include '../static/sesion.php';
     <head>
         <?php include '../static/head.html'; ?>
 
-        <script type="text/javascript" src="../assets/google/loader.js"></script>
-        <script src="../assets/charts/Chart.js"></script>
-    <script src="../assets/charts/gauge.js"></script>
-    <link rel="stylesheet" type="text/css" href="../assets/css/boton.css">
+      <!-- <script type="text/javascript" src="../assets/google/loader.js"></script> -->
+      <script src="../assets/charts/Chart.js"></script> 
+       <script src="../assets/charts/gauge.js"></script> 
+        <link rel="stylesheet" type="text/css" href="../assets/css/boton.css">
 
     </head>
     <body>

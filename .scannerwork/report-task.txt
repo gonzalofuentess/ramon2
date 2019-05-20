@@ -1,7 +1,7 @@
 organization=gonzalofuentess-github
-projectKey=ramon
+projectKey=gonzalofuentess_ramon
 serverUrl=https://sonarcloud.io
 serverVersion=7.8.0.25122
-dashboardUrl=https://sonarcloud.io/dashboard?id=ramon
-ceTaskId=AWrL9CMOrfVuMbbS9e1e
-ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWrL9CMOrfVuMbbS9e1e
+dashboardUrl=https://sonarcloud.io/dashboard?id=gonzalofuentess_ramon
+ceTaskId=AWrR7uUmDtaazXWEFLSo
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AWrR7uUmDtaazXWEFLSo
