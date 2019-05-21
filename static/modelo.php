@@ -99,7 +99,28 @@ class Consulta {
         $this->desconectarBD($conexion);
         
     }
+    function  buscaAlertas(){
+          $conexion = $this->conectarBD();
+        $sql = "SELECT * from ramon.alerta;";
+        
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        $i = 0;
 
+        while ($row = mysqli_fetch_array($result)) {
+            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
+            $rawdata[$i] = $row;
+            $i++;
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return $rawdata;        
+    }
 }
 
 ?>

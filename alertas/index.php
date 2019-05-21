@@ -5,11 +5,11 @@ include '../static/sesion.php';
 <!DOCTYPE html>
 <html lang="es">
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/> 
         <?php include '../static/head.html'; ?>
 
-        <script type="text/javascript" src="../assets/google/loader.js"></script>
-
-
+     <!--   <script type="text/javascript" src="../assets/google/loader.js"></script> -->
+        <link href="../assets/tablexport/css/tableexport.min.css" rel="stylesheet"> 
 
     </head>
     <body>
@@ -37,24 +37,7 @@ include '../static/sesion.php';
                                         </li>
                                     </ul>
                                     <ul class="nav nav-tabs">
-
-                                        <?php
-                                        if (isset($_GET["menu"])) {
-                                            switch ($_GET["menu"]) {
-                                                case "correo":
-                                                    ?>
-                                                    <li><a href="../alertas/"><i class="icon-home"></i>Alertas</a></li>
-                                                    <li class="active"><a><i class="icon-envelope-alt"></i>Correo</a></li>                                                   
-                                                    <?php
-                                                    break;
-                                            }
-                                        } else {
-                                            ?>
-                                            <li class = "active"><a><i class="icon-home"></i>Alertas </a></li>
-                                            <li><a href = "../alertas/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li>
-                                        <?php }
-                                        ?>
-
+                                        <li class = "active"><a><i class="icon-warning-sign"></i>Alertas </a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -62,22 +45,62 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
+                <!-- Código Página -->
+                <section class="page container">
+                    <div class="box">
+                        <div class="box-header"> 
+                            <i class="icon-table"></i>
+                            <h5>
+                                Alertas Emitidas
+                            </h5>
+                        </div>
+                        <div class="box-content">
+                            <?php
+                            require_once '../static/modelo.php';
+                            $raw = new Consulta();
+                            $datos = $raw->buscaAlertas();
+                            #print_r($datos);
+                            ?>
+                            <table id="tabla" class="table table-hover table-bordered tablesorter">
+                                <thead>
+                                    <tr>
+                                        <th>Número</th>
+                                        <th>Tipo de Alerta</th>
+                                        <th>Inicio</th>
+                                        <th>Término</th>
+                                        <th>Duración</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($datos as $key => $value) {
+                                        ?>
+                                        <tr>                                          
+                                            <td><?php echo $value["idalerta"]; ?> </td> 
+                                            <td><?php
+                                                if ($value["idtipo"] == 1) {
+                                                    echo "Silencio";
+                                                } elseif ($value["idtipo"] == 2) {
+                                                    echo "Señal Baja";
+                                                } else {
+                                                    echo "Señal Alta";
+                                                }
+                                                ?> </td> 
+                                            <td><?php echo date("m-d-Y H:i:s", strtotime($value["inicio"])); ?> </td> 
+                                            <td><?php echo date("m-d-Y H:i:s", strtotime($value["termino"])); ?> </td> 
+                                            <td><?php echo $value["duracion_horas"]; ?> </td>                                   
+                                        </tr>  
+                                        <?php
+                                    }
+                                    ?>                                   
 
+                                </tbody>
+                            </table>                         
 
-                <?php
-                if (isset($_GET["menu"])) {
+                        </div>
+                    </div> 
+                </section>
 
-                    switch ($_GET["menu"]) {
-                        case "correo":
-
-                            include './correo.html';
-                            break;
-                    }
-                } else {
-
-                    include './main.php';
-                }
-                ?>
 
 
             </div>
@@ -96,7 +119,20 @@ include '../static/sesion.php';
             </div>
         </footer>
 
+
+
         <?php include '../static/script.html'; ?>
+        <script src="../assets/tablexport/js/FileSaver.min.js"></script>
+        <script src="../assets/tablexport/js/Blob.min.js"></script>
+        <script src="../assets/tablexport/js/xls.core.min.js"></script>
+        <script src="../assets/tablexport/js/tableexport.js"></script>
+
+
+
+        <script>
+            $("#tabla").tableExport({formats: ["xlsx", "csv", "txt"], });
+        </script>
+
     </body>
 
 </html>

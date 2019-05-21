@@ -1,0 +1,3 @@
+Número  Tipo de Alerta  Inicio  Término  Duración
+1  Silencio  Internet Explorer  Internet Explorer  Internet Explorer
+4.0  Firefox  Firefox  Firefox  Firefox
