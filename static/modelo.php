@@ -142,7 +142,7 @@ class Consulta {
         $this->desconectarBD($conexion);
         //devolvemos rawdata
         //return $rawdata;
-        return $rawdata;
+        return array_reverse($rawdata);
     }
 
 }
