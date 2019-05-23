@@ -36,7 +36,7 @@ class Consulta {
                 die();
             }
             $row = mysqli_fetch_array($result);
-            
+
             $this->desconectarBD($conexion);
             return $row[0][0];
         } catch (Exception $ex) {
@@ -69,7 +69,7 @@ class Consulta {
     function buscaRadio() {
         $conexion = $this->conectarBD();
         $sql = "SELECT frecuencia, descripcion FROM ramon.radio;";
-        
+
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
@@ -87,22 +87,21 @@ class Consulta {
         //devolvemos rawdata
         //return $rawdata;
         return $rawdata;
-        
     }
-    
-    function actualizaBaja($baja, $activo){
+
+    function actualizaBaja($baja, $activo) {
         $conexion = $this->conectarBD();
         $sql = "UPDATE  ramon.tipo_alerta set umbral=$baja, estado=$activo  where idtipo=2";
         $conexion->query($sql);
-        
-        
+
+
         $this->desconectarBD($conexion);
-        
     }
-    function  buscaAlertas(){
-          $conexion = $this->conectarBD();
+
+    function buscaAlertas() {
+        $conexion = $this->conectarBD();
         $sql = "SELECT * from ramon.alerta;";
-        
+
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
@@ -119,8 +118,33 @@ class Consulta {
         $this->desconectarBD($conexion);
         //devolvemos rawdata
         //return $rawdata;
-        return $rawdata;        
+        return $rawdata;
     }
+
+    function consultaSemana() {
+
+        $conexion = $this->conectarBD();
+        $sql = "CALL ramon.semana();";
+
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        $i = 0;
+
+        while ($row = mysqli_fetch_array($result)) {
+            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
+            $rawdata[$i] = $row;
+            $i++;
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return $rawdata;
+    }
+
 }
 
 ?>

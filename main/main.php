@@ -1,0 +1,189 @@
+<section class="page container">              
+    <div class="row">    
+        <div class="span16">
+            <div class="row">
+                <div class="span8">
+                    <div class="box">
+                        <div class="box-header">
+                            <i class="icon-bar-chart"></i>
+                            <h5>Resumen Mensual</h5>
+                        </div>
+                        <div class="box-content">
+                            <div id="app"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span8">
+                    <div class="box">
+                        <div class="box-header">
+                            <i class="icon-check"></i>
+                            <h5>
+                                Alertas Última Semana
+                            </h5>
+                        </div>
+                        <div class="box-content">
+                            <div id="barras"></div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span8">
+                    <div class="box">
+                        <div class="box-header">
+                            <i class="icon-folder-open"></i>
+                            <h5>Content</h5>
+                        </div>
+                        <div class="box-content">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                            <p>
+                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                                qui officia deserunt mollit anim id est laborum.
+                            </p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+
+
+</section>
+
+<script crossorigin src="../assets/charts/react.production.min.js"></script>
+<script crossorigin src="../assets/charts/react-dom.production.min.js"></script>
+<script src="../assets/charts/prop-types.min.js">
+</script>
+<script src="../assets/charts/browser.min.js"></script>
+
+<script src="../assets/charts/apexcharts@latest.js"></script>
+<script src="../assets/charts/react-apexcharts.iife.min.js"></script>
+
+<script type="text/babel">
+
+    class PieChart extends React.Component {
+
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                options: {
+                    labels: ['Señal OK', 'Silencio', 'Señal NOK'],
+                    colors: ['#1ac810', '#2537ed', '#ef3838'],
+                    responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200
+                                },
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }]
+
+                },
+                series: [90, 0, 5],
+            }
+        }
+
+        render() {
+            return (
+                    <div>
+                    <div id="chart">
+                        <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width="380" />
+                            </div>
+                        <div id="html-dist">
+                        </div>
+                            </div>
+                    );
+        }
+    }
+
+    const domContainer = document.querySelector('#app');
+    ReactDOM.render(React.createElement(PieChart), domContainer);
+
+</script>
+<script type="text/babel">
+
+    class BarChart extends React.Component {
+
+        constructor(props) {
+            super(props);
+
+            this.state = {
+                options: {
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded'
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'],
+                    },
+                    yaxis: {
+                        title: {
+                            text: '(Alertas)'
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Silencio',
+                        data: [0, 1, 4, 11, 2, 0,2]
+                    }, {
+                        name: 'Señal',
+                        data: [0, 0, 0, 0, 9, 8, 7]
+                    }],
+            }
+        }
+
+        render() {
+            return (
+                    <div>
+<div id="chart">
+<ReactApexChart options={this.state.options} series={this.state.series} type="bar" height="350" />
+        </div>
+            <div id="html-dist">
+            </div>
+                </div>
+                    );
+        }
+    }
+
+    const domContainer = document.querySelector('#barras');
+    ReactDOM.render(React.createElement(BarChart), domContainer);
+
+</script>
+

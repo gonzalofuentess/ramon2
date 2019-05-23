@@ -51,7 +51,7 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
-                <?php include './main.html'; ?>
+                <?php include './main.php'; ?>
 
 
             </div>

@@ -86,16 +86,16 @@ include '../static/sesion.php';
                                                     echo "Señal Alta";
                                                 }
                                                 ?> </td> 
-                                            <td><?php echo date("m-d-Y H:i:s", strtotime($value["inicio"])); ?> </td> 
-                                            <td><?php echo date("m-d-Y H:i:s", strtotime($value["termino"])); ?> </td> 
+                                            <td><?php echo date("d-m-Y H:i:s", strtotime($value["inicio"])); ?> </td> 
+                                            <td><?php echo date("d-m-Y H:i:s", strtotime($value["termino"])); ?> </td> 
                                             <td><?php echo $value["duracion_horas"]; ?> </td>                                   
                                         </tr>  
                                         <?php
                                     }
-                                    ?>                                   
+                                    ?>                                  
 
                                 </tbody>
-                            </table>                         
+                            </table>                        
 
                         </div>
                     </div> 
