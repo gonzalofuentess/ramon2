@@ -1,7 +1,9 @@
 <?php
 require_once '../static/modelo.php';
 $raw = new Consulta();
+$uptime = $raw->consultaUptime();
 $datos = $raw->consultaSemana();
+
 #print_r($datos);
 ?>
 
@@ -13,7 +15,7 @@ $datos = $raw->consultaSemana();
                     <div class="box">
                         <div class="box-header">
                             <i class="icon-bar-chart"></i>
-                            <h5>Resumen Mensual</h5>
+                            <h5>Uptime Acumulado</h5>
                         </div>
                         <div class="box-content">
                             <div id="app"></div>
@@ -101,7 +103,10 @@ $datos = $raw->consultaSemana();
                         }]
 
                 },
-                series: [90, 0, 5],
+                series: [<?php echo $uptime[0]["resultado"].",";
+                echo $uptime[0]["silencio"].",";
+                echo $uptime[0]["senal"].",";
+                ?>],
             }
         }
 
