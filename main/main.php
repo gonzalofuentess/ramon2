@@ -12,7 +12,7 @@ $datos = $raw->consultaSemana();
         <div class="span16">
             <div class="row">
                 <div class="span8">
-                    <div class="box">
+                    <div class="box" style="max-height: 340px;">
                         <div class="box-header">
                             <i class="icon-bar-chart"></i>
                             <h5>Uptime Acumulado</h5>
@@ -23,51 +23,72 @@ $datos = $raw->consultaSemana();
                     </div>
                 </div>
                 <div class="span8">
-                    <div class="box">
-                        <div class="box-header">
-                            <i class="icon-check"></i>
-                            <h5>
-                                Alertas Última Semana
-                            </h5>
-                        </div>
-                        <div class="box-content">
-                            <div id="barras"></div>                           
+                    <div class="span8">
+                        <div class="box">
+                            <div class="box-header">
+                                <i class="icon-bar-chart"></i>
+                                <h5>
+                                    Resumen Uptime - Downtime
+                                </h5>
+                            </div>
+                            <div class="box-content box-table">
+                                <table id="sample-table" class="table table-hover table-bordered tablesorter">
+                                    <thead>
+                                        <tr>
+                                            <th>Descripción</th>
+                                            <th>Tiempo</th>                                     
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Uptime</td>
+                                            <td>00:30</td>                                     
+                                        </tr>
+                                        <tr>
+                                            <td>Silencio</td>
+                                            <td>00:20</td>                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Señal Baja</td>
+                                            <td>00:00</td>                                 
+                                        </tr> 
+                                        <tr>
+                                            <td>Señal Alta</td>
+                                            <td>00:00</td>                                 
+                                        </tr>                                                                      
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="span8">
-                    <div class="box">
-                        <div class="box-header">
-                            <i class="icon-folder-open"></i>
-                            <h5>Content</h5>
-                        </div>
-                        <div class="box-content">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                            <p>
-                                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa
-                                qui officia deserunt mollit anim id est laborum.
-                            </p>
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                                incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>
 
 
+
+
+</section>
+
+<section class="page container"> 
+    <div class="row">
+        <div class="span8">
+            <div class="box">
+                <div class="box-header">
+                    <i class="icon-thumbs-down"></i>
+                    <h5>
+                        Alertas Última Semana
+                    </h5>
+                </div>
+                <div class="box-content">
+                    <div id="barras"></div>                           
+                </div>
+            </div>
+        </div>
+
+
+    </div> 
 
 </section>
 
@@ -89,7 +110,7 @@ $datos = $raw->consultaSemana();
             this.state = {
                 options: {
                     labels: ['Señal OK', 'Silencio', 'Señal NOK'],
-                    colors: ['#1ac810', '#2537ed', '#ef3838'],
+                    colors: ['#1ac810', '#2537ed', '#ef3838'],                    
                     responsive: [{
                             breakpoint: 480,
                             options: {
@@ -103,108 +124,111 @@ $datos = $raw->consultaSemana();
                         }]
 
                 },
-                series: [<?php echo $uptime[0]["resultado"].",";
-                echo $uptime[0]["silencio"].",";
-                echo $uptime[0]["senal"].",";
-                ?>],
+                series: [<?php
+    echo $uptime[0]["resultado"] . ",";
+    echo $uptime[0]["silencio"] . ",";
+    echo $uptime[0]["senal"] . ",";
+    ?>],
             }
         }
 
         render() {
             return (
                     <div>
-            <div id="chart">
-            <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width="380" />
-                        </div>
-                            <div id="html-dist">
-                            </div>
-                            </div>
-                    );
+                                <div id="chart">
+                                <ReactApexChart options={this.state.options} series={this.state.series} type="pie" width="380" />
+</div>
+<div id="html-dist">
+</div>
+</div>
+         );
         }
     }
 
     const domContainer = document.querySelector('#app');
     ReactDOM.render(React.createElement(PieChart), domContainer);</script>
-    <script type="text/babel">
+<script type="text/babel">
 
-        class BarChart extends React.Component {
+    class BarChart extends React.Component {
 
-            constructor(props) {
-                super(props);
-                this.state = {
-                    options: {
-                        plotOptions: {
-                            bar: {
-                                horizontal: false,
-                                columnWidth: '55%',
-                                endingShape: 'rounded'
-                            },
+        constructor(props) {
+            super(props);
+            this.state = {
+                options: {
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded'
                         },
-                        dataLabels: {
-                            enabled: false
-                        },
-                        stroke: {
-                            show: true,
-                            width: 2,
-                            colors: ['transparent']
-                        },
-                        xaxis: {
-                            categories: [
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: [
 <?php
 foreach ($datos as $key => $value) {
     echo "'" . $value["dias"] . "'" . ",";
 }
 ?>
 
-                            ],
-                        },
-                        yaxis: {
-                            title: {
-                                text: '(Alertas)'
-                            }
-                        },
-                        fill: {
-                            opacity: 1
-                        },
-                        tooltip: {
-                            y: {
-                                formatter: function (val) {
-                                    return val
-                                }
-                            }
+                        ],
+                    },
+                    yaxis: {
+                        title: {
+                            text: '(Alertas)'
                         }
                     },
-                    series: [{
-                            name: 'Silencio',
-                            data: [<?php
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return val
+                            }
+                        }
+                    }
+                },
+                series: [{
+                        name: 'Silencio',
+                        data: [<?php
 foreach ($datos as $key => $value) {
     echo $value["silencio"] . ",";
 }
 ?>]
-                        }, {
-                            name: 'Señal',
-                            data: [<?php foreach ($datos as $key => $value) {
+                    }, {
+                        name: 'Señal',
+                        data: [<?php
+foreach ($datos as $key => $value) {
     echo $value["baja"] . ",";
-} ?>]
-                        }],
-                }
-            }
-
-            render() {
-                return (
-                        <div>
-                    <div id="chart">
-                    <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height="350" />
-                            </div>
-                                <div id="html-dist">
-                                    </div>
-                                </div>
-                        );
+}
+?>]
+                    }],
             }
         }
 
-        const domContainer = document.querySelector('#barras');
-        ReactDOM.render(React.createElement(BarChart), domContainer);
+        render() {
+            return (
+                            <div>
+                                <div id="chart">
+                    <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height="350" />
+            </div>
+            <div id="html-dist">
+            </div>
+            </div>
+                    );
+        }
+    }
+
+    const domContainer = document.querySelector('#barras');
+    ReactDOM.render(React.createElement(BarChart), domContainer);
 
     </script>
 

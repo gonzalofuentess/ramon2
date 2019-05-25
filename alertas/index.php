@@ -64,11 +64,11 @@ include '../static/sesion.php';
                             <table id="tabla" class="table table-hover table-bordered tablesorter">
                                 <thead>
                                     <tr>
-                                        <th>Número</th>
+                                        <th>N&uacute;mero</th>
                                         <th>Tipo de Alerta</th>
                                         <th>Inicio</th>
-                                        <th>Término</th>
-                                        <th>Duración</th>
+                                        <th>T&eacute;rmino</th>
+                                        <th>Duraci&oacute;n</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -130,7 +130,7 @@ include '../static/sesion.php';
 
 
         <script>
-            $("#tabla").tableExport({formats: ["xlsx", "csv", "txt"], });
+            $("#tabla").tableExport({formats: ["xlsx","txt"], });
         </script>
 
     </body>

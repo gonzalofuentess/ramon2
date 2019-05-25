@@ -10,7 +10,7 @@ include '../static/sesion.php';
         <style>
             #chart {
                 max-width: 380px;
-                margin: 35px auto;              
+                margin: 35px auto;
             }
         </style>
 
@@ -27,7 +27,7 @@ include '../static/sesion.php';
                         <div class="row">
                             <div class="span7">
                                 <header class="page-header">                             
-                                    <h3>Dashboard <br>
+                                    <h3>Reportes <br>
                                         <small>Radio Monitoreo FM</small>
                                     </h3>
                                 </header>
@@ -43,7 +43,7 @@ include '../static/sesion.php';
                                         <li class="active">
                                             <a href="#"><i class="icon-home"></i>Home</a>
                                         </li>
-                                       <!-- <li><a href="#"><i class="icon-check"></i>Sistema</a></li>      -->                                
+                                        <li><a href="#"><i class="icon-check"></i>Sistema</a></li>                                      
                                     </ul>
                                 </div>
                             </div>
@@ -51,7 +51,7 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
-                <?php include './main.php'; ?>
+                <?php #include './main.php'; ?>
 
 
             </div>
