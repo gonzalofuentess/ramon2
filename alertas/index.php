@@ -87,7 +87,12 @@ include '../static/sesion.php';
                                                 }
                                                 ?> </td> 
                                             <td><?php echo date("d-m-Y H:i:s", strtotime($value["inicio"])); ?> </td> 
-                                            <td><?php echo date("d-m-Y H:i:s", strtotime($value["termino"])); ?> </td> 
+                                            <td><?php if(!isset($value["termino"])){
+                                                echo "Alerta en Proceso";
+                                            }else{                                                
+                                              echo  date("d-m-Y H:i:s", strtotime($value["termino"]));
+                                            }                                            
+                                             ?> </td> 
                                             <td><?php echo $value["duracion_horas"]; ?> </td>                                   
                                         </tr>  
                                         <?php

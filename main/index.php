@@ -5,15 +5,7 @@ include '../static/sesion.php';
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <?php include '../static/head.html'; ?>
-
-        <style>
-            #chart {
-                max-width: 380px;
-                margin: 35px auto;              
-            }
-        </style>
-
+        <?php include '../static/head.html'; ?>       
     </head>
     <body>
         <?php include '../static/encabezado.html'; ?>

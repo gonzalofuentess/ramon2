@@ -144,8 +144,8 @@ class Consulta {
         //return $rawdata;
         return array_reverse($rawdata);
     }
-    
-     function consultaUptime() {
+
+    function consultaUptime() {
 
         $conexion = $this->conectarBD();
         $sql = "CALL ramon.uptime();";
@@ -167,6 +167,41 @@ class Consulta {
         //devolvemos rawdata
         //return $rawdata;
         return ($rawdata);
+    }
+
+    function resumen() {
+
+
+        $conexion = $this->conectarBD();
+        $sql1 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=1;";
+
+        if (!$result1 = mysqli_query($conexion, $sql1)) {
+            die();
+        }
+
+
+        $row1 = mysqli_fetch_array($result1);
+        $silencio = $row1[0];
+
+
+        //Cerramos la base de datos
+
+        $sql2 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=2;";
+        $result2 = mysqli_query($conexion, $sql2);
+        $row2 = mysqli_fetch_array($result2);
+
+        $baja = $row2[0];
+
+        $sql3 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=3;";
+        $result3 = mysqli_query($conexion, $sql3);
+        $row3 = mysqli_fetch_array($result3);
+         $alta = $row3[0];
+        $this->desconectarBD($conexion);
+
+        $arreglo = array('silencio' => $silencio, 'baja' => $baja,'alta'=>$alta);
+        //devolvemos rawdata
+        //return $rawdata;
+        return ($arreglo);
     }
 
 }
