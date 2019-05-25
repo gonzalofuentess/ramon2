@@ -2,8 +2,6 @@
 require_once '../static/modelo.php';
 $raw = new Consulta();
 $uptime = $raw->consultaUptime();
-#print_r($uptime);
-echo $uptime[0]["senal"];
 $datos = $raw->consultaSemana();
 $resumen = $raw->resumen();
 #print_r($resumen);
@@ -55,7 +53,7 @@ if (isset($resumen["alta"])) {
         <div class="span16">
             <div class="row">
                 <div class="span8">
-                    <div class="box" style="max-height: 340px;">
+                    <div class="box" style="max-height: 300px;">
                         <div class="box-header">
                             <i class="icon-bar-chart"></i>
                             <h5>Uptime Acumulado</h5>
@@ -125,8 +123,6 @@ if (isset($resumen["alta"])) {
                 </div>
             </div>
         </div>
-
-
     </div>
 </section>
 
@@ -178,7 +174,88 @@ if (isset($resumen["alta"])) {
     }
     const domContainer = document.querySelector('#app');
     ReactDOM.render(React.createElement(PieChart), domContainer);
-
   </script>
+  <script type="text/babel">
+ class BarChart extends React.Component {
+      
+      constructor(props) {
+        super(props);
 
+        this.state = {
+          options: {
+            plotOptions: {
+              bar: {
+                horizontal: false,
+                columnWidth: '55%',
+                endingShape: 'rounded'	
+              },
+            },
+            dataLabels: {
+              enabled: false
+            },
+            stroke: {
+              show: true,
+              width: 2,
+              colors: ['transparent']
+            },
+            xaxis: {
+              categories: [<?php
+foreach ($datos as $key => $value) {
+    echo "'" . $value["dias"] . "'" . ",";
+}
+?>],
+            },
+            yaxis: {
+              title: {
+                text: 'Alertas'
+              }
+            },
+            fill: {
+              opacity: 1
+            },
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return "$ " + val + " thousands"
+                }
+              }
+            }
+          },
+          series: [{
+            name: 'Silencio',
+            data: [<?php
+foreach ($datos as $key => $value) {
+    echo $value["silencio"] . ",";
+}
+?>]
+          }, {
+            name: 'Señal',
+            data: [<?php
+foreach ($datos as $key => $value) {
+    echo $value["baja"] . ",";
+}
+?>]
+          }],
+        }
+      }
+
+      render() {
+        return (
+          <div>
+            <div id="chart">
+              <ReactApexChart options={this.state.options} series={this.state.series} type="bar" height="350" />
+            </div>
+            <div id="html-dist">
+            </div>
+          </div>
+        );
+      }
+    }
+
+    const domContainer = document.querySelector('#barras');
+    ReactDOM.render(React.createElement(BarChart), domContainer);
+  
+  
+  </script>
+  
 

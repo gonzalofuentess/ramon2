@@ -147,35 +147,35 @@ class Consulta {
 
     function consultaUptime() {
 
-        $conexion = $this->conectarBD();
+        $conexion3 = $this->conectarBD();
         $sql = "CALL ramon.uptime();";
 
-        if (!$result = mysqli_query($conexion, $sql)) {
+        if (!$result3 = mysqli_query($conexion3, $sql)) {
             die();
         }
-        $rawdata = array();
+        $rawdata3 = array();
         $i = 0;
 
-        while ($row = mysqli_fetch_array($result)) {
+        while ($row3 = mysqli_fetch_array($result3)) {
             //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
-            $rawdata[$i] = $row;
+            $rawdata3[$i] = $row3;
             $i++;
         }
         //Cerramos la base de datos
 
-        $this->desconectarBD($conexion);
+        $this->desconectarBD($conexion3);
         //devolvemos rawdata
         //return $rawdata;
-        return ($rawdata);
+        return ($rawdata3);
     }
 
     function resumen() {
 
 
-        $conexion = $this->conectarBD();
+        $conexion2 = $this->conectarBD();
         $sql1 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=1;";
 
-        if (!$result1 = mysqli_query($conexion, $sql1)) {
+        if (!$result1 = mysqli_query($conexion2, $sql1)) {
             die();
         }
 
@@ -187,16 +187,16 @@ class Consulta {
         //Cerramos la base de datos
 
         $sql2 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=2;";
-        $result2 = mysqli_query($conexion, $sql2);
+        $result2 = mysqli_query($conexion2, $sql2);
         $row2 = mysqli_fetch_array($result2);
 
         $baja = $row2[0];
 
         $sql3 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=3;";
-        $result3 = mysqli_query($conexion, $sql3);
+        $result3 = mysqli_query($conexion2, $sql3);
         $row3 = mysqli_fetch_array($result3);
          $alta = $row3[0];
-        $this->desconectarBD($conexion);
+        $this->desconectarBD($conexion2);
 
         $arreglo = array('silencio' => $silencio, 'baja' => $baja,'alta'=>$alta);
         //devolvemos rawdata
