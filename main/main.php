@@ -143,7 +143,7 @@ if (isset($resumen["alta"])) {
 
         this.state = {
           options: {
-            labels: ['Señal OK', 'Silencio', 'Señal NOK'],
+            labels: ['Señal OK', 'Silencio', 'Señal Baja'],
             colors: ['#1ac810', '#2537ed', '#ef3838'],
             responsive: [{
               breakpoint: 480,
@@ -157,7 +157,7 @@ if (isset($resumen["alta"])) {
               }
             }]
           },
-          series: [<?php echo $uptime[0]["resultado"];?>, <?php echo $uptime[0]["silencio"]; ?>, <?php echo $uptime[0]["senal"]; ?>],
+          series: [<?php echo $uptime[0]["resultado"];?>, <?php echo $resumen["silencio"]; ?>, <?php echo $resumen["baja"]; ?>],
         }
       }
       render() {
@@ -216,7 +216,7 @@ foreach ($datos as $key => $value) {
             tooltip: {
               y: {
                 formatter: function (val) {
-                  return "$ " + val + " thousands"
+                  return  val + " Alerta"
                 }
               }
             }
