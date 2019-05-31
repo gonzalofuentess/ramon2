@@ -7,13 +7,14 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="brand"><i class="icon-rss"> Ramon</i></a>          
-                       
+
             <div id="app-nav-top-bar" class="nav-collapse">                        
-                <ul class="nav pull-right">                    
+                <ul class="nav pull-right">  
+                    <li><a id="liveclock"></a></li>
+                    
                     <li>
-                        <a data-toggle="modal" data-target="#myModal" href="#">Cambiar Contraseña</a>
-                        
-                      <!--  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button> -->
+                        <a data-toggle="modal" data-target="#myModal" href="#">Cambiar Contraseña</a>                      
+
                     </li>
                     <li>
                         <a href="../static/cerrar-sesion.php">Salir</a>
@@ -25,46 +26,46 @@
 </div>
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+    <div class="modal-dialog">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Cambiar Contraseña</h4>
-      </div>
-      <div class="modal-body">
-        <div id="acct-password-row" class="span7">
-                <fieldset>                  
-                    <div class="control-group ">
-                        <label class="control-label">Contraseña Actual<span class="required"></span></label>
-                        <div class="controls">
-                            <input id="oldpass" name="oldpass" class="span4" type="password" value="" required>
-                        </div>
-                    </div>
-                    <div class="control-group ">
-                        <label class="control-label">Nueva Contraseña</label>
-                        <div class="controls">
-                            <input id="newpass" name="newpass" class="span4" type="password" value="" required>
-
-                        </div>
-                    </div>     
-                     <div class="control-group ">
-                        <label class="control-label">Confirmar Contraseña</label>
-                        <div class="controls">
-                            <input id="confirmarpass" name="confirmarpass" class="span4" type="password" value="" required>
-
-                        </div>
-                    </div>   
-                </fieldset>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cambiar Contraseña</h4>
             </div>
-          
-          
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-      </div>
-    </div>
+            <div class="modal-body">
+                <div id="acct-password-row" class="span7">
+                    <fieldset>                  
+                        <div class="control-group ">
+                            <label class="control-label">Contraseña Actual<span class="required"></span></label>
+                            <div class="controls">
+                                <input id="oldpass" name="oldpass" class="span4" type="password" value="" required>
+                            </div>
+                        </div>
+                        <div class="control-group ">
+                            <label class="control-label">Nueva Contraseña</label>
+                            <div class="controls">
+                                <input id="newpass" name="newpass" class="span4" type="password" value="" required>
 
-  </div>
+                            </div>
+                        </div>     
+                        <div class="control-group ">
+                            <label class="control-label">Confirmar Contraseña</label>
+                            <div class="controls">
+                                <input id="confirmarpass" name="confirmarpass" class="span4" type="password" value="" required>
+
+                            </div>
+                        </div>   
+                    </fieldset>
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+            </div>
+        </div>
+
+    </div>
 </div>

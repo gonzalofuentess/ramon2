@@ -37,7 +37,7 @@ include '../static/sesion.php';
                                         </li>
                                     </ul>
                                     <ul class="nav nav-tabs">
-                                        <li class = "active"><a><i class="icon-warning-sign"></i>Alertas </a></li>
+                                        <li class = "active"><a><i class="icon-list-alt"></i>Alertas </a></li>
                                     </ul>
                                 </div>
                             </div>

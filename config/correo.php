@@ -72,12 +72,7 @@
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
-                </div>   
-
-
-
-
-
+                </div> 
             </div>
         </div>
     </div>
