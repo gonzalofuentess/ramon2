@@ -5,6 +5,7 @@ $uptime = $raw->consultaUptime();
 $datos = $raw->consultaSemana();
 $resumen = $raw->resumen();
 #print_r($resumen);
+echo $uptime[0]["resultado"];
 
 function conversorSegundosHoras($tiempo_en_segundos) {
     $horas = floor($tiempo_en_segundos / 3600);
@@ -32,13 +33,17 @@ function conversorSegundosHoras($tiempo_en_segundos) {
 $var1 = conversorSegundosHoras($uptime[0]["resultado"]);
 if (isset($resumen["silencio"])) {
     $silencio = conversorSegundosHoras($resumen["silencio"]);
+    $silencio1 = $resumen["silencio"];
 } else {
     $silencio = 0;
+    $silencio1 = 0;
 }
 if (isset($resumen["baja"])) {
     $baja = conversorSegundosHoras($resumen["baja"]);
+    $baja1 = $resumen["baja"];
 } else {
     $baja = 0;
+    $baja1 = 0;
 }
 if (isset($resumen["alta"])) {
     $alta = conversorSegundosHoras($resumen["alta"]);
@@ -157,7 +162,7 @@ if (isset($resumen["alta"])) {
               }
             }]
           },
-          series: [<?php echo $uptime[0]["resultado"];?>, <?php echo $resumen["silencio"]; ?>, <?php echo $resumen["baja"]; ?>],
+          series: [<?php echo $uptime[0]["resultado"];?>, <?php echo $silencio1; ?>, <?php echo $baja1; ?>],
         }
       }
       render() {

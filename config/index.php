@@ -8,8 +8,8 @@ include '../static/sesion.php';
         <?php include '../static/head.html'; ?>
 
       <!-- <script type="text/javascript" src="../assets/google/loader.js"></script> -->
-      <script src="../assets/charts/Chart.js"></script> 
-       <script src="../assets/charts/gauge.js"></script> 
+        <script src="../assets/charts/Chart.js"></script> 
+        <script src="../assets/charts/gauge.js"></script> 
         <link rel="stylesheet" type="text/css" href="../assets/css/boton.css">
 
     </head>
@@ -46,6 +46,13 @@ include '../static/sesion.php';
                                                     ?>
                                                     <li><a href="../config/"><i class="icon-home"></i>Radio</a></li>
                                                     <li class="active"><a><i class="icon-envelope-alt"></i>Correo</a></li> 
+                                                    <li><a href="../config/index.php?menu=comando"><i class="icon-home"></i>Comandos</a></li> 
+                                                    <?php
+                                                    break;
+                                                case "comando":
+                                                    ?>
+                                                    <li><a href="../config/"><i class="icon-home"></i>Radio</a></li>
+                                                    <li><a href="../config/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li> 
                                                     <li class="active"><a><i class="icon-home"></i>Comandos</a></li> 
                                                     <?php
                                                     break;
@@ -54,7 +61,7 @@ include '../static/sesion.php';
                                             ?>
                                             <li class = "active"><a><i class="icon-home"></i>Radio </a></li>
                                             <li><a href = "../config/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li>
-                                            <li class="active"><a><i class="icon-home"></i>Comandos</a></li> 
+                                            <li><a href="../config/index.php?menu=comando"><i class="icon-home"></i>Comandos</a></li> 
                                         <?php }
                                         ?>
 
@@ -73,7 +80,10 @@ include '../static/sesion.php';
                     switch ($_GET["menu"]) {
                         case "correo":
 
-                            include './correo.html';
+                            include './correo.php';
+                            break;
+                        case "comando":
+                            include './comando.php';
                             break;
                     }
                 } else {

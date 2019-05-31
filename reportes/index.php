@@ -41,9 +41,8 @@ include '../static/sesion.php';
                                     </ul>
                                     <ul class="nav nav-tabs">
                                         <li class="active">
-                                            <a href="#"><i class="icon-home"></i>Home</a>
-                                        </li>
-                                        <li><a href="#"><i class="icon-check"></i>Sistema</a></li>                                      
+                                            <a href="#"><i class="icon-calendar"></i>Reportes</a>
+                                        </li>                                                                           
                                     </ul>
                                 </div>
                             </div>
@@ -51,7 +50,134 @@ include '../static/sesion.php';
                     </div>
                 </section>
 
-                <?php #include './main.php'; ?>
+                <section class="page container"> 
+                    <div class="row">
+                        <div class="span8">
+                            <div class="box">
+                                <div class="box-header">
+                                    <i class="icon-pencil"></i>
+                                    <h5>
+                                        Agregar Destinatario
+                                    </h5>
+                                </div>
+                                <div class="box-content">
+                                    <form class="form-inline">
+                                        <p>Dirección de Correo:</p>                      
+                                        <div class="input-prepend" id="form1">
+                                            <span class="add-on"><i class="icon-envelope"></i></span>                         
+                                            <input id="correo" class="span6" type="text" required>
+                                        </div>                        
+                                    </form>                        
+                                </div>
+                                <div class="box-footer">
+                                    <button type="button" class="btn btn-primary" onclick="radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
+                                        <i class="icon-ok"></i>
+                                        Guardar
+                                    </button>
+                                </div>            
+                            </div>
+
+                        </div>
+                        <div class="span8">
+                            <div class="box">
+                                <div class="box-header">
+                                    <i class="icon-group"></i>
+                                    <h5>
+                                        Destinatarios Actuales
+                                    </h5>
+                                </div>
+                                <div class="box-content box-table">
+                                    <table id="sample-table" class="table table-hover table-bordered tablesorter">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Correo</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>gonzalo.fuentes12@inacapmail.cl</td>
+                                                <td class="td-actions">                              
+
+                                                    <a href="javascript:;" class="btn btn-small btn-danger">
+                                                        <i class="btn-icon-only icon-remove"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>                         
+
+                                        </tbody>
+                                    </table>
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="page container"> 
+                    <div class="row">
+                        <div class="span8">
+                            <div class="box">
+                                <div class="box-header">
+                                    <i class="icon-pencil"></i>
+                                    <h5>
+                                        Agregar Programación
+                                    </h5>
+                                </div>
+                                <div class="box-content">
+                                    <form class="form-inline">
+                                        <p>Horario:</p>                      
+                                        <div class="input-prepend" id="form1">
+                                            <span class="add-on"><i class="icon-edit"></i></span>                         
+                                            <input id="correo" class="span2" type="time" required>
+                                        </div>                        
+                                    </form>                        
+                                </div>
+                                <div class="box-footer">
+                                    <button type="button" class="btn btn-primary" onclick="radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
+                                        <i class="icon-ok"></i>
+                                        Guardar
+                                    </button>
+                                </div>            
+                            </div>
+
+                        </div>
+                        <div class="span8">
+                            <div class="box">
+                                <div class="box-header">
+                                    <i class="icon-group"></i>
+                                    <h5>
+                                        Programación Actual
+                                    </h5>
+                                </div>
+                                <div class="box-content box-table">
+                                    <table id="sample-table" class="table table-hover table-bordered tablesorter">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Horario</th>
+                                                <th>Eliminar</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>08:00</td>
+                                                <td class="td-actions">                              
+
+                                                    <a href="javascript:;" class="btn btn-small btn-danger">
+                                                        <i class="btn-icon-only icon-remove"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>                         
+
+                                        </tbody>
+                                    </table>
+                                </div>                     
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
 
             </div>
