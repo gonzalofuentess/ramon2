@@ -25,28 +25,21 @@ if (!$servidor || !$puerto) {
         echo $var . ". Puerto \n";
     }
 }
-if ($switchtls) {
+if ($switchtls=="true") {
     $tls = 1;
 } else {
     $tls = 0;
 }
-if ($autenticacion == "NO") {
-    $anonimo = 0;
-} else {
-    $anonimo = 1;
-}
 
-if ($anonimo == 0) {
-
-    $arreglo = array('servidor' => $servidor, 'puerto' => $puerto, 'starttls' => $tls, 'anonimo' => 0);
-} else {
-    $arreglo = array('servidor' => $servidor, 'puerto' => $puerto, 'starttls' => $tls, 'anonimo' => 1, 'correousuario' => $correousuario, 'correopassword' => $correopassword);
+if ($autenticacion == "SI") {
+    $arreglo = array('servidor' => $servidor, 'puerto' => $puerto, 'starttls' => $tls, 'autenticacion' => 1, 'correousuario' => $correousuario, 'correopassword' => $correopassword);
+} if ($autenticacion == "NO"){
+    $arreglo = array('servidor' => $servidor, 'puerto' => $puerto, 'starttls' => $tls, 'autenticacion' => 0);
 }
 
 require_once '../static/modelo.php';
 $guardar = new Consulta();
 $guardar->guardaMail($arreglo);
 
-
-
+echo "Datos Actualizados";
 ?>

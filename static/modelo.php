@@ -206,15 +206,77 @@ class Consulta {
 
     function guardaMail($arreglo) {
 
-        $conexion = $this->conectarBD();
-        $sql = "UPDATE  ramon.tipo_alerta set umbral=$baja, estado=$activo  where idtipo=2";
-        $conexion->query($sql);
+        if ($arreglo['autenticacion'] == 1) {
+
+            $servidor = $arreglo['servidor'];
+            $puerto = $arreglo['puerto'];
+            $starttls = $arreglo['starttls'];
+            $usuario = $arreglo['correousuario'];
+            $clave = $arreglo['correopassword'];
+
+            $conexion = $this->conectarBD();
+            $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,tls=$starttls,usuario='$usuario',clave='$clave',autenticacion=1 where idservidor=1;";
+            $conexion->query($sql);
+        } else {
+
+            $servidor = $arreglo['servidor'];
+            $puerto = $arreglo['puerto'];
+            $starttls = $arreglo['starttls'];
+            $conexion = $this->conectarBD();
+            $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,tls=$starttls,usuario=NULL,clave=NULL,autenticacion=0 where idservidor=1;";
+            $conexion->query($sql);
+        }
 
 
         $this->desconectarBD($conexion);
+
+
+        return 1;
+    }
+
+    function consultaMail() {
+
+        $conexion = $this->conectarBD();
+        $sql = "SELECT servidor,puerto,tls,autenticacion,usuario,clave FROM ramon.servidor where idservidor=1;";
+
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        //$i = 0;
+
+        while ($row = mysqli_fetch_array($result)) {
+
+            array_push($rawdata, $row);
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return $rawdata[0];
+    }
+
+    function agregarDestinatario($mail) {
+
+
+        $conexion = $this->conectarBD();
+        $sql = "insert into ramon.destinatario_alerta(idservidor, destinatario) values (1,'$mail');";
+
+        $conexion->query($sql);
+
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+     
+
+        return 1;
+    }
+    function buscaDestinatario(){
         
         
-        return 0;
     }
 
 }

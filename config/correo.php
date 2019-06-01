@@ -1,3 +1,13 @@
+<?php
+
+require_once '../static/modelo.php';
+$modelo = new Consulta();
+$correo = $modelo ->consultaMail();
+#print_r($correo);
+#echo $correo['autenticacion'];
+
+?>
+
 <section class="page container"> 
     <div class="row">
         <div class="span16">
@@ -15,20 +25,20 @@
                             <div class="control-group ">
                                 <label class="control-label">Dirección Servidor <span class="required"></span></label>
                                 <div class="controls">
-                                    <input id="servidor" name="servidor" class="span5" type="text" value="">
+                                    <input id="servidor" name="servidor" class="span5" type="text" value="<?php echo $correo['servidor']; ?>">
 
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Puerto</label>
                                 <div class="controls">
-                                    <input id="puerto" name="puerto" min="0" max="65535" class="span5" type="number" value="">
+                                    <input id="puerto" name="puerto" min="0" max="65535" class="span5" type="number" value="<?php echo $correo['puerto']; ?>">
 
                                 </div>
                             </div>    
                             <p>STARTTLS</p>
-                            <div class="onoffswitch">
-                                <input type="checkbox" name="switchtls" class="onoffswitch-checkbox" id="switchtls" checked>
+                            <div class="onoffswitch">                               
+                                <input type="checkbox" name="switchtls" class="onoffswitch-checkbox" id="switchtls"  <?php  if($correo['tls'] == "1"){  echo "checked";  }  ?> >                               
                                 <label class="onoffswitch-label" for="switchtls">
                                     <span class="onoffswitch-inner"></span>
                                     <span class="onoffswitch-switch"></span>
@@ -43,22 +53,21 @@
                                 <label for="autenticacion" class="control-label">¿Requiere Autenticación?</label>
                                 <div class="controls">
                                     <select onchange="autentica.call(this, event)" id="autenticacion" class="span5">
-                                        <option value="">SI</option>
-                                        <option value="">NO</option>                                                                                       
+                                        <option value="SI">SI</option>
+                                        <option value="NO"<?php if($correo['autenticacion']==0){ echo "selected"; } ?>>NO</option>                                                                                       
                                     </select>
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Usuario</label>
                                 <div class="controls">
-                                    <input id="correousuario" name="correousuario" class="span5" type="text" value="">
-
+                                    <input id="correousuario" name="correousuario" class="span5" type="text" value="<?php if($correo['autenticacion']==1){ echo $correo['usuario']; } ?>" <?php if($correo['autenticacion']==0){ echo "disabled";} ?>>
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Contraseña</label>
                                 <div class="controls">
-                                    <input id="correopassword" name="correopassword" class="span5" type="password" value="">
+                                    <input id="correopassword" name="correopassword" class="span5" type="password" value="<?php if($correo['autenticacion']==1){ echo "xxxxxxxxx";} ?>" <?php if($correo['autenticacion']==0){ echo "disabled";} ?>>
 
                                 </div>
                             </div>
@@ -67,7 +76,7 @@
 
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value,document.getElementById('autenticacion').value,document.getElementById('correousuario').value,document.getElementById('correopassword').value)">
+                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value,document.getElementById('correousuario').value,document.getElementById('correopassword').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
