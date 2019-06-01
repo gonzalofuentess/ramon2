@@ -46,20 +46,19 @@
                                         <option value="">SI</option>
                                         <option value="">NO</option>                                                                                       
                                     </select>
-
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Usuario</label>
                                 <div class="controls">
-                                    <input id="correo-usuario" name="correo-usuario" class="span5" type="text" value="">
+                                    <input id="correousuario" name="correousuario" class="span5" type="text" value="">
 
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Contraseña</label>
                                 <div class="controls">
-                                    <input id="correo-password" name="correo-password" class="span5" type="password" value="">
+                                    <input id="correopassword" name="correopassword" class="span5" type="password" value="">
 
                                 </div>
                             </div>
@@ -68,7 +67,7 @@
 
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
+                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value,document.getElementById('autenticacion').value,document.getElementById('correousuario').value,document.getElementById('correopassword').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -85,14 +84,14 @@
 
         if (valor === "NO") {
 
-            document.getElementById("correo-usuario").disabled = true;
-            document.getElementById("correo-password").disabled = true;
-            document.getElementById("correo-usuario").value = "";
-            document.getElementById("correo-password").value = "";
+            document.getElementById("correousuario").disabled = true;
+            document.getElementById("correopassword").disabled = true;
+            document.getElementById("correousuario").value = "";
+            document.getElementById("correopassword").value = "";
 
         } else {
-            document.getElementById("correo-usuario").disabled = false;
-            document.getElementById("correo-password").disabled = false;
+            document.getElementById("correousuario").disabled = false;
+            document.getElementById("correopassword").disabled = false;
 
         }
         //alert(this.options[this.selectedIndex].text);
@@ -114,12 +113,12 @@
                         <p>Dirección de Correo:</p>                      
                         <div class="input-prepend" id="form1">
                             <span class="add-on"><i class="icon-envelope"></i></span>                         
-                            <input id="correo" class="span6" type="text" required>
+                            <input id="mail" class="span6" type="text" required>
                         </div>                        
                     </form>                        
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
+                    <button type="button" class="btn btn-primary" onclick="destinatario(document.getElementById('mail').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -162,3 +161,34 @@
             </div>
         </div>
 </section>
+
+<script>
+
+function server(servidor,puerto,correousuario,correopassword,) {
+var e = document.getElementById("autenticacion");
+//var value = e.options[e.selectedIndex].value;
+var autenticacion = e.options[e.selectedIndex].text;
+
+        $.ajax({
+            url: "server.php",
+            type: "POST",
+            data: "servidor=" + servidor + "&puerto=" + puerto + "&switchtls=" + document.getElementById('switchtls').checked + "&autenticacion=" + autenticacion + "&correousuario=" + correousuario + "&correopassword=" + correopassword,
+            success: function (resp) {
+                alert(resp);
+                //$('#resultado').html(resp)
+               // if (resp === "Datos Actualizados") {
+                //    location.reload();
+                //}
+
+            }
+        });
+
+    }
+    
+    function destinatario(){
+        
+        
+    }
+
+
+</script>

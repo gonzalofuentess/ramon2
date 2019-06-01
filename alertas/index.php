@@ -59,6 +59,9 @@ include '../static/sesion.php';
                             require_once '../static/modelo.php';
                             $raw = new Consulta();
                             $datos = $raw->buscaAlertas();
+                            if(!$datos){
+                                echo "<h4>No Existen Alertas</h4>";
+                            }else{
                             #print_r($datos);
                             ?>
                             <table id="tabla" class="table table-hover table-bordered tablesorter">
@@ -97,11 +100,12 @@ include '../static/sesion.php';
                                         </tr>  
                                         <?php
                                     }
+                                    
                                     ?>                                  
 
                                 </tbody>
                             </table>                        
-
+                            <?php }?>
                         </div>
                     </div> 
                 </section>

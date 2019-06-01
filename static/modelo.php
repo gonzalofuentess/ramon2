@@ -195,13 +195,26 @@ class Consulta {
         $sql3 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=3;";
         $result3 = mysqli_query($conexion2, $sql3);
         $row3 = mysqli_fetch_array($result3);
-         $alta = $row3[0];
+        $alta = $row3[0];
         $this->desconectarBD($conexion2);
 
-        $arreglo = array('silencio' => $silencio, 'baja' => $baja,'alta'=>$alta);
+        $arreglo = array('silencio' => $silencio, 'baja' => $baja, 'alta' => $alta);
         //devolvemos rawdata
         //return $rawdata;
         return ($arreglo);
+    }
+
+    function guardaMail($arreglo) {
+
+        $conexion = $this->conectarBD();
+        $sql = "UPDATE  ramon.tipo_alerta set umbral=$baja, estado=$activo  where idtipo=2";
+        $conexion->query($sql);
+
+
+        $this->desconectarBD($conexion);
+        
+        
+        return 0;
     }
 
 }
