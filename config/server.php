@@ -25,7 +25,7 @@ if (!$servidor || !$puerto) {
         echo $var . ". Puerto \n";
     }
 }
-if ($switchtls=="true") {
+if ($switchtls == "true") {
     $tls = 1;
 } else {
     $tls = 0;
@@ -33,7 +33,9 @@ if ($switchtls=="true") {
 
 if ($autenticacion == "SI") {
     $arreglo = array('servidor' => $servidor, 'puerto' => $puerto, 'starttls' => $tls, 'autenticacion' => 1, 'correousuario' => $correousuario, 'correopassword' => $correopassword);
-} if ($autenticacion == "NO"){
+}
+
+if ($autenticacion == "NO") {
     $arreglo = array('servidor' => $servidor, 'puerto' => $puerto, 'starttls' => $tls, 'autenticacion' => 0);
 }
 

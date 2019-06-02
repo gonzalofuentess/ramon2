@@ -270,13 +270,51 @@ class Consulta {
         $this->desconectarBD($conexion);
         //devolvemos rawdata
         //return $rawdata;
-     
+
 
         return 1;
     }
-    function buscaDestinatario(){
-        
-        
+
+    function buscaDestinatario() {
+
+        $conexion = $this->conectarBD();
+        $sql = "select iddestinatario, destinatario from ramon.destinatario_alerta;";
+
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        $i = 0;
+
+        while ($row = mysqli_fetch_array($result)) {
+            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
+            $rawdata[$i] = $row;
+            $i++;
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return $rawdata;
+    }
+
+    function eliminaDestinatario($iddestinatario) {
+
+        $conexion = $this->conectarBD();
+        $sql = "DELETE FROM ramon.destinatario_alerta  where iddestinatario = $iddestinatario;";
+
+
+
+        if ($conexion->query($sql) !== TRUE) {
+            echo "Error Borrando datos: " . $conexion->error . "<br>";
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return 1;
     }
 
 }

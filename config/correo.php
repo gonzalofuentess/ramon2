@@ -1,11 +1,10 @@
 <?php
-
 require_once '../static/modelo.php';
 $modelo = new Consulta();
-$correo = $modelo ->consultaMail();
+$correo = $modelo->consultaMail();
+$destinatarios = $modelo->buscaDestinatario();
 #print_r($correo);
 #echo $correo['autenticacion'];
-
 ?>
 
 <section class="page container"> 
@@ -38,7 +37,11 @@ $correo = $modelo ->consultaMail();
                             </div>    
                             <p>STARTTLS</p>
                             <div class="onoffswitch">                               
-                                <input type="checkbox" name="switchtls" class="onoffswitch-checkbox" id="switchtls"  <?php  if($correo['tls'] == "1"){  echo "checked";  }  ?> >                               
+                                <input type="checkbox" name="switchtls" class="onoffswitch-checkbox" id="switchtls"  <?php
+                                if ($correo['tls'] == "1") {
+                                    echo "checked";
+                                }
+                                ?> >                               
                                 <label class="onoffswitch-label" for="switchtls">
                                     <span class="onoffswitch-inner"></span>
                                     <span class="onoffswitch-switch"></span>
@@ -54,20 +57,40 @@ $correo = $modelo ->consultaMail();
                                 <div class="controls">
                                     <select onchange="autentica.call(this, event)" id="autenticacion" class="span5">
                                         <option value="SI">SI</option>
-                                        <option value="NO"<?php if($correo['autenticacion']==0){ echo "selected"; } ?>>NO</option>                                                                                       
+                                        <option value="NO"<?php
+                                        if ($correo['autenticacion'] == 0) {
+                                            echo "selected";
+                                        }
+                                        ?>>NO</option>                                                                                       
                                     </select>
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Usuario</label>
                                 <div class="controls">
-                                    <input id="correousuario" name="correousuario" class="span5" type="text" value="<?php if($correo['autenticacion']==1){ echo $correo['usuario']; } ?>" <?php if($correo['autenticacion']==0){ echo "disabled";} ?>>
+                                    <input id="correousuario" name="correousuario" class="span5" type="text" value="<?php
+                                    if ($correo['autenticacion'] == 1) {
+                                        echo $correo['usuario'];
+                                    }
+                                    ?>" <?php
+                                           if ($correo['autenticacion'] == 0) {
+                                               echo "disabled";
+                                           }
+                                           ?>>
                                 </div>
                             </div>
                             <div class="control-group ">
                                 <label class="control-label">Contraseña</label>
                                 <div class="controls">
-                                    <input id="correopassword" name="correopassword" class="span5" type="password" value="<?php if($correo['autenticacion']==1){ echo "xxxxxxxxx";} ?>" <?php if($correo['autenticacion']==0){ echo "disabled";} ?>>
+                                    <input id="correopassword" name="correopassword" class="span5" type="password" value="<?php
+                                    if ($correo['autenticacion'] == 1) {
+                                        echo "xxxxxxxxx";
+                                    }
+                                    ?>" <?php
+                                           if ($correo['autenticacion'] == 0) {
+                                               echo "disabled";
+                                           }
+                                           ?>>
 
                                 </div>
                             </div>
@@ -76,7 +99,7 @@ $correo = $modelo ->consultaMail();
 
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value,document.getElementById('correousuario').value,document.getElementById('correopassword').value)">
+                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value, document.getElementById('correousuario').value, document.getElementById('correopassword').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -143,29 +166,44 @@ $correo = $modelo ->consultaMail();
                         Destinatarios Actuales
                     </h5>
                 </div>
-                <div class="box-content box-table">
-                    <table id="sample-table" class="table table-hover table-bordered tablesorter">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Correo</th>
-                                <th>Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>gonzalo.fuentes12@inacapmail.cl</td>
-                                <td class="td-actions">                              
 
-                                    <a href="javascript:;" class="btn btn-small btn-danger">
-                                        <i class="btn-icon-only icon-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>                         
-                            
-                        </tbody>
-                    </table>
+                <?php if (!$destinatarios) { ?>
+                    <h4 align='center'>Sin destinatarios</h4>                  
+
+                <?php } else { ?>
+                    <div class="box-content box-table">
+                        <table id="sample-table" class="table table-hover table-bordered tablesorter">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Correo</th>
+                                    <th>Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php
+                                $variable = 1;
+                                foreach ($destinatarios as $dato) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $variable; ?></td>
+                                        <td><?php echo $dato['destinatario']; ?></td>
+                                        <td>                                        
+                                            <a class="btn btn-small btn-danger">                                            
+                                                <i class="btn-icon-only" onclick="elimina('<?php echo $dato['iddestinatario']; ?>')">Eliminar</i>
+                                            </a>
+                                        </td>
+                                    </tr>    
+                                    <?php $variable++;
+                                }
+                                ?>                            
+
+
+
+                            </tbody>
+                        </table>
+<?php } ?>
                 </div>                     
             </div>
         </div>
@@ -173,10 +211,10 @@ $correo = $modelo ->consultaMail();
 
 <script>
 
-function server(servidor,puerto,correousuario,correopassword,) {
-var e = document.getElementById("autenticacion");
+    function server(servidor, puerto, correousuario, correopassword, ) {
+        var e = document.getElementById("autenticacion");
 //var value = e.options[e.selectedIndex].value;
-var autenticacion = e.options[e.selectedIndex].text;
+        var autenticacion = e.options[e.selectedIndex].text;
 
         $.ajax({
             url: "server.php",
@@ -185,19 +223,48 @@ var autenticacion = e.options[e.selectedIndex].text;
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)
-               // if (resp === "Datos Actualizados") {
-                //    location.reload();
-                //}
+                if (resp === "Datos Actualizados") {
+                    location.reload();
+                }
 
             }
         });
 
     }
-    
-    function destinatario(){
-        
-        
-    }
 
+    function destinatario(correo) {
+
+        $.ajax({
+            url: "destinatario.php",
+            type: "POST",
+            data: "correo=" + correo,
+            success: function (resp) {
+                alert(resp);
+                //$('#resultado').html(resp)
+                if (resp === "Datos Actualizados") {
+                    location.reload();
+                }
+
+            }
+        });
+
+
+    }
+    function elimina(destinatario) {
+        $.ajax({
+            url: "elimina.php",
+            type: "POST",
+            data: "iddestinatario=" + destinatario,
+            success: function (resp) {
+                alert(resp);
+                //$('#resultado').html(resp)
+                if (resp === "Datos Actualizados") {
+                    location.reload();
+                }
+
+            }
+        });
+
+    }
 
 </script>
