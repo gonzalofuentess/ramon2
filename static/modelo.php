@@ -257,11 +257,11 @@ class Consulta {
         return $rawdata[0];
     }
 
-    function agregarDestinatario($mail) {
+    function agregarDestinatario($mail,$tipo) {
 
 
         $conexion = $this->conectarBD();
-        $sql = "insert into ramon.destinatario_alerta(idservidor, destinatario) values (1,'$mail');";
+        $sql = "insert into ramon.destinatario(idservidor,tipodestinatario,destinatario) values (1,$tipo,'$mail');";
 
         $conexion->query($sql);
 
@@ -275,10 +275,10 @@ class Consulta {
         return 1;
     }
 
-    function buscaDestinatario() {
+    function buscaDestinatario($tipo) {
 
         $conexion = $this->conectarBD();
-        $sql = "select iddestinatario, destinatario from ramon.destinatario_alerta;";
+        $sql = "select iddestinatario, destinatario from ramon.destinatario where tipodestinatario=$tipo;";
 
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
@@ -302,7 +302,7 @@ class Consulta {
     function eliminaDestinatario($iddestinatario) {
 
         $conexion = $this->conectarBD();
-        $sql = "DELETE FROM ramon.destinatario_alerta  where iddestinatario = $iddestinatario;";
+        $sql = "DELETE FROM ramon.destinatario  where iddestinatario = $iddestinatario;";
 
 
 

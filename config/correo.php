@@ -2,7 +2,7 @@
 require_once '../static/modelo.php';
 $modelo = new Consulta();
 $correo = $modelo->consultaMail();
-$destinatarios = $modelo->buscaDestinatario();
+$destinatarios = $modelo->buscaDestinatario(1);
 #print_r($correo);
 #echo $correo['autenticacion'];
 ?>
@@ -181,7 +181,6 @@ $destinatarios = $modelo->buscaDestinatario();
                                 </tr>
                             </thead>
                             <tbody>
-
                                 <?php
                                 $variable = 1;
                                 foreach ($destinatarios as $dato) {
@@ -195,18 +194,17 @@ $destinatarios = $modelo->buscaDestinatario();
                                             </a>
                                         </td>
                                     </tr>    
-                                    <?php $variable++;
+                                    <?php
+                                    $variable++;
                                 }
-                                ?>                            
-
-
-
+                                ?>                       
                             </tbody>
                         </table>
 <?php } ?>
                 </div>                     
             </div>
         </div>
+    </div>
 </section>
 
 <script>

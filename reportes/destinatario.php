@@ -10,7 +10,7 @@ if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
 
 
     $actualiza = new Consulta();
-    $actualiza->agregarDestinatario($correo,1);
+    $actualiza->agregarDestinatario($correo,2);
     echo "Datos Actualizados";
 } else {
     echo "!Ingrese un correo en formato Válido¡";
