@@ -257,9 +257,7 @@ class Consulta {
         return $rawdata[0];
     }
 
-    function agregarDestinatario($mail,$tipo) {
-
-
+    function agregarDestinatario($mail, $tipo) {
         $conexion = $this->conectarBD();
         $sql = "insert into ramon.destinatario(idservidor,tipodestinatario,destinatario) values (1,$tipo,'$mail');";
 
@@ -270,8 +268,6 @@ class Consulta {
         $this->desconectarBD($conexion);
         //devolvemos rawdata
         //return $rawdata;
-
-
         return 1;
     }
 
@@ -303,6 +299,61 @@ class Consulta {
 
         $conexion = $this->conectarBD();
         $sql = "DELETE FROM ramon.destinatario  where iddestinatario = $iddestinatario;";
+
+
+
+        if ($conexion->query($sql) !== TRUE) {
+            echo "Error Borrando datos: " . $conexion->error . "<br>";
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return 1;
+    }
+
+    function agregarHora($hora) {
+        $conexion = $this->conectarBD();
+        $sql = "insert into ramon.programacion(idservidor,horario) values (1,'$hora');";
+
+        $conexion->query($sql);
+
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return 1;
+    }
+
+    function listarHora() {
+        $conexion = $this->conectarBD();
+
+        $sql = "SELECT * FROM ramon.programacion order by horario;";
+
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        $i = 0;
+
+        while ($row = mysqli_fetch_array($result)) {
+            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
+            $rawdata[$i] = $row;
+            $i++;
+        }
+        //Cerramos la base de datos
+
+        $this->desconectarBD($conexion);
+        //devolvemos rawdata
+        //return $rawdata;
+        return $rawdata;
+    }
+    function eliminaHora($idprogramacion) {
+
+        $conexion = $this->conectarBD();
+        $sql = "DELETE FROM ramon.programacion  where idprogramacion = $idprogramacion;";
 
 
 

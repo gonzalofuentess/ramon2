@@ -7,8 +7,6 @@ $correo = $_POST['correo'];
 
 
 if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-
-
     $actualiza = new Consulta();
     $actualiza->agregarDestinatario($correo,2);
     echo "Datos Actualizados";

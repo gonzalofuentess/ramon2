@@ -3,6 +3,7 @@ include '../static/sesion.php';
 require_once '../static/modelo.php';
 $modelo = new Consulta();
 $destinatarios = $modelo->buscaDestinatario(2);
+$horarios = $modelo->listarHora();
 ?>
 
 <!DOCTYPE html>
@@ -139,12 +140,12 @@ $destinatarios = $modelo->buscaDestinatario(2);
                                         <p>Horario:</p>
                                         <div class = "input-prepend" id = "form1">
                                             <span class = "add-on"><i class = "icon-edit"></i></span>
-                                            <input id = "correo" class = "span2" type = "time" required>
+                                            <input id ="programacion" class = "span2" type = "time" required>
                                         </div>
                                     </form>
                                 </div>
                                 <div class = "box-footer">
-                                    <button type = "button" class = "btn btn-primary" onclick = "radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
+                                    <button type = "button" class = "btn btn-primary" onclick = "agregaHora(document.getElementById('programacion').value)">
                                         <i class = "icon-ok"></i>
                                         Guardar
                                     </button>
@@ -170,16 +171,23 @@ $destinatarios = $modelo->buscaDestinatario(2);
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>08:00</td>
-                                                <td class = "td-actions">
-
-                                                    <a href = "javascript:;" class = "btn btn-small btn-danger">
-                                                        <i class = "btn-icon-only icon-remove"></i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                         <?php
+                                            $variable = 1;
+                                            foreach ($horarios as $dato) {
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $variable; ?></td>
+                                                    <td><?php echo $dato['horario']; ?></td>
+                                                    <td>                                        
+                                                        <a class="btn btn-small btn-danger">                                            
+                                                            <i class="btn-icon-only" onclick="eliminaHora('<?php echo $dato['idprogramacion']; ?>')">Eliminar</i>
+                                                        </a>
+                                                    </td>
+                                                </tr>    
+                                                <?php
+                                                $variable++;
+                                            }
+                                            ?>      
 
                                         </tbody>
                                     </table>
@@ -244,10 +252,9 @@ $destinatarios = $modelo->buscaDestinatario(2);
 
             }
             
-            function agregaHora(horario) {
-
+            function agregaHora(horario) {             
                 $.ajax({
-                    url: "destinatario.php",
+                    url: "agregahora.php",
                     type: "POST",
                     data: "horario=" + horario,
                     success: function (resp) {
@@ -265,8 +272,9 @@ $destinatarios = $modelo->buscaDestinatario(2);
             
             
             function eliminaHora(hora) {
+                
                 $.ajax({
-                    url: "elimina.php",
+                    url: "eliminahora.php",
                     type: "POST",
                     data: "idhora=" + hora,
                     success: function (resp) {
