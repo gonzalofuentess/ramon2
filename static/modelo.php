@@ -367,6 +367,14 @@ class Consulta {
         //return $rawdata;
         return 1;
     }
+    function agregaComando(){
+        
+        
+    }
+    function eliminaComando(){
+        
+        
+    }
 
 }
 
