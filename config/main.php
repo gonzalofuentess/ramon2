@@ -34,7 +34,8 @@
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-pencil"></i></span>                           
                             <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $arreglo[0]["umbral"]; ?>" required>
-                        </div>                        
+                        </div>
+                        <span><p id="sile"></p></span>                      
                     </form>                    
                 </div>
                 <div class="box-footer">
@@ -165,9 +166,10 @@
                             if (($arreglo[1]['estado']) == 0) {
                                 echo "disabled";
                             }
-                            ?> >
-                        </div>
-                    </form>   
+                            ?> >                            
+                        </div>                         
+                    </form> 
+                    <span><p id="baj"></p></span> 
                     <div class="onoffswitch">
                         <input type="checkbox" name="switchbaja" class="onoffswitch-checkbox" id="switchbaja" <?php
                         if (($arreglo[1]['estado']) == 1) {
@@ -186,7 +188,7 @@
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
-                </div>
+                </div>                
             </div>       
         </div> 
         <div class="span8">        
@@ -224,7 +226,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" onclick="alta(document.getElementById('altacriticaltext').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -250,8 +252,8 @@
 
     function radio(senal, descripcion, tiempo) {
 
-        var anterior = <?php echo $radio[0]['frecuencia']; ?>;        
-       
+        var anterior = <?php echo $radio[0]['frecuencia']; ?>;
+
         if (parseFloat(anterior) !== parseFloat(senal)) {
             var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
             if (respuesta === true)
@@ -278,21 +280,45 @@
     }
 
     function baja(bajacriticaltext) {
+        if (bajacriticaltext>60) {
+            $('#baj').html('<font color="red">Debe Ser Menor o igual 60</font>');
+
+        } else {
+
+            $.ajax({
+                url: "baja.php",
+                type: "POST",
+                data: "baja=" + document.getElementById('switchbaja').checked + "&bajacriticaltext=" + bajacriticaltext,
+                success: function (resp) {
+                    alert(resp);
+                    //$('#resultado').html(resp)
+                    if (resp === "Datos Actualizados") {
+                        location.reload();
+                    }
+
+                }
+            });
+        }
+
+    }
+
+    function alta(altacriticaltext) {
         $.ajax({
-            url: "baja.php",
+            url: "alta.php",
             type: "POST",
-            data: "baja=" + document.getElementById('switchbaja').checked + "&bajacriticaltext=" + bajacriticaltext,
+            data: "alta=" + document.getElementById('switchalta').checked + "&altacriticaltext=" + altacriticaltext,
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)
-                if(resp==="Datos Actualizados"){                    
-                   location.reload(); 
+                if (resp === "Datos Actualizados") {
+                    location.reload();
                 }
 
             }
         });
 
     }
+
 
 
 
