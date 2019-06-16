@@ -1,7 +1,5 @@
 <?php
-
 class Consulta {
-
     function conectarBD() {
         require('conexion.php');
         //variable que guarda la conexión de la base de datos
@@ -97,7 +95,8 @@ class Consulta {
 
         $this->desconectarBD($conexion);
     }
-      function actualizaAlta($alta, $activo) {
+
+    function actualizaAlta($alta, $activo) {
         $conexion = $this->conectarBD();
         $sql = "UPDATE  ramon.tipo_alerta set umbral=$alta, estado=$activo  where idtipo=3";
         $conexion->query($sql);
@@ -178,34 +177,24 @@ class Consulta {
     }
 
     function resumen() {
-
-
         $conexion2 = $this->conectarBD();
         $sql1 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=1;";
 
         if (!$result1 = mysqli_query($conexion2, $sql1)) {
             die();
         }
-
-
         $row1 = mysqli_fetch_array($result1);
         $silencio = $row1[0];
-
-
         //Cerramos la base de datos
-
         $sql2 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=2;";
         $result2 = mysqli_query($conexion2, $sql2);
         $row2 = mysqli_fetch_array($result2);
-
         $baja = $row2[0];
-
         $sql3 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=3;";
         $result3 = mysqli_query($conexion2, $sql3);
         $row3 = mysqli_fetch_array($result3);
         $alta = $row3[0];
         $this->desconectarBD($conexion2);
-
         $arreglo = array('silencio' => $silencio, 'baja' => $baja, 'alta' => $alta);
         //devolvemos rawdata
         //return $rawdata;
@@ -215,18 +204,15 @@ class Consulta {
     function guardaMail($arreglo) {
 
         if ($arreglo['autenticacion'] == 1) {
-
             $servidor = $arreglo['servidor'];
             $puerto = $arreglo['puerto'];
             $starttls = $arreglo['starttls'];
             $usuario = $arreglo['correousuario'];
             $clave = $arreglo['correopassword'];
-
             $conexion = $this->conectarBD();
             $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,tls=$starttls,usuario='$usuario',clave='$clave',autenticacion=1 where idservidor=1;";
             $conexion->query($sql);
         } else {
-
             $servidor = $arreglo['servidor'];
             $puerto = $arreglo['puerto'];
             $starttls = $arreglo['starttls'];
@@ -234,11 +220,7 @@ class Consulta {
             $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,tls=$starttls,usuario=NULL,clave=NULL,autenticacion=0 where idservidor=1;";
             $conexion->query($sql);
         }
-
-
         $this->desconectarBD($conexion);
-
-
         return 1;
     }
 
@@ -302,44 +284,25 @@ class Consulta {
         //return $rawdata;
         return $rawdata;
     }
-
-    function eliminaDestinatario($iddestinatario) {
-
+    function eliminaDestinatario($iddestinatario, $tipo) {
         $conexion = $this->conectarBD();
         $sql = "DELETE FROM ramon.destinatario  where iddestinatario = $iddestinatario;";
-
-
-
         if ($conexion->query($sql) !== TRUE) {
             echo "Error Borrando datos: " . $conexion->error . "<br>";
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return 1;
     }
-
     function agregarHora($hora) {
         $conexion = $this->conectarBD();
-        $sql = "insert into ramon.programacion(idservidor,horario) values (1,'$hora');";
-
+        $sql = "insert into ramon.programacion(tipodestinatario,horario) values (2,'$hora');";
         $conexion->query($sql);
-
-        //Cerramos la base de datos
-
-        $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
+        $this->desconectarBD($conexion);      
         return 1;
     }
-
     function listarHora() {
         $conexion = $this->conectarBD();
-
         $sql = "SELECT * FROM ramon.programacion order by horario;";
-
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
@@ -359,29 +322,52 @@ class Consulta {
         return $rawdata;
     }
     function eliminaHora($idprogramacion) {
-
         $conexion = $this->conectarBD();
         $sql = "DELETE FROM ramon.programacion  where idprogramacion = $idprogramacion;";
-
-
-
-        if ($conexion->query($sql) !== TRUE) {
-            echo "Error Borrando datos: " . $conexion->error . "<br>";
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
         }
-        //Cerramos la base de datos
+        $this->desconectarBD($conexion);
+        return 1;
+    }
 
+    function agregaComando() {
+        
+    }
+
+    function eliminaComando() {
+        
+    }
+
+    function buscaSenal() {
+        $conexion = $this->conectarBD();
+        #$sql = "SELECT * FROM ramon.senal;";
+        $sql = "SELECT DISTINCT date_format(registro,'%Y-%m-%d %H:%i:%s') as registro,valor FROM ramon.senal WHERE registro > DATE_SUB(NOW(), INTERVAL 3 MINUTE);";
+
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        $i = 0;
+
+        while ($row = mysqli_fetch_array($result)) {
+            $rawdata[$i] = $row;
+            $i++;
+        }
         $this->desconectarBD($conexion);
         //devolvemos rawdata
         //return $rawdata;
+        return $rawdata;
+    }
+
+    function truncar() {
+        $conexion = $this->conectarBD();
+        $sql = "CALL ramon.truncar();";
+        if ($conexion->query($sql) !== TRUE) {
+            echo "Error Ejecutando Comando: " . $conexion->error . "<br>";
+        }
+        $this->desconectarBD($conexion);
         return 1;
-    }
-    function agregaComando(){
-        
-        
-    }
-    function eliminaComando(){
-        
-        
     }
 
 }

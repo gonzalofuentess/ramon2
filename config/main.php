@@ -162,7 +162,7 @@
                         <div class="input-prepend">
 
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="70" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
+                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="60" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
                             if (($arreglo[1]['estado']) == 0) {
                                 echo "disabled";
                             }
@@ -202,7 +202,7 @@
                         <p>Señal Alta</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-chevron-down"></i></span>
-                            <input class="span4" type="number" placeholder="Mínimo" id="altacriticaltext" value="<?php echo $arreglo[2]['umbral']; ?>" <?php
+                            <input class="span4" type="number" min="10" max="65" placeholder="Mínimo" id="altacriticaltext" value="<?php echo $arreglo[2]['umbral']; ?>" <?php
                             if (($arreglo[2]['estado']) == 0) {
                                 echo "disabled";
                             }

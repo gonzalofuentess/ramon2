@@ -7,7 +7,7 @@ $iddestinatario = $_POST['iddestinatario'];
 
 
 $elimina = new Consulta();
-$elimina ->eliminaDestinatario($iddestinatario);
+$elimina ->eliminaDestinatario($iddestinatario,2);
 
 echo "Datos Actualizados";
 

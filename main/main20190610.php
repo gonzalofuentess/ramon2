@@ -4,31 +4,8 @@ $raw = new Consulta();
 $uptime = $raw->consultaUptime();
 $datos = $raw->consultaSemana();
 $resumen = $raw->resumen();
-$historial = $raw->buscaSenal();
-
-#print_r($historial);
-#imprime valores de la base
-#foreach ($historial as $in =>$out){    
-#    echo $out['valor'];
-#}
-#    echo $out['registro'];   
-#}
-
-
-
-
-
-#echo join($historial['valor'], ','); 
-
-#print_r($historial);
-#echo join($historial['valor'],',');
-
-#print_r(json_encode($historial));
-#print_r($historial);
-#echo $uptime[0]["resultado"];
-#$json = json_encode($datos);
-#print_r($json);
-
+#print_r($resumen);
+echo $uptime[0]["resultado"];
 
 function conversorSegundosHoras($tiempo_en_segundos) {
     $horas = floor($tiempo_en_segundos / 3600);
@@ -73,21 +50,6 @@ if (isset($resumen["alta"])) {
 } else {
     $alta = 0;
 }
-
-$salida1=NULL;
-foreach ($datos as $key => $value) {
-    $salida1 .= $value["silencio"].",";
-}
-
-$salida2=NULL;
-foreach ($datos as $key => $value) {
-    $salida2 .= $value["baja"].",";
-}
-$salida3 = NULL;
-foreach ($datos as $key => $value) {
-    $salida3 .= "'".$value["dias"]."'".",";
-}
-
 
 ?>
 
@@ -166,20 +128,6 @@ foreach ($datos as $key => $value) {
                 </div>
             </div>
         </div>
-        <div class="span8">
-            <div class="box">
-                <div class="box-header">
-                    <i class="icon-signal"></i>
-                    <h5>
-                       Señal
-                    </h5>
-                </div>
-                <div class="box-content">
-                    <div id="senal"></div>                           
-                </div>
-            </div>
-        </div>
-    
     </div>
 </section>
 
@@ -187,8 +135,8 @@ foreach ($datos as $key => $value) {
 <script crossorigin src="../assets/charts/react-dom.production.min.js"></script>
 <script src="../assets/charts/prop-types.min.js">
 </script>
-<script src="../assets/charts/irregular-data-series.js"></script>
 <script src="../assets/charts/browser.min.js"></script>
+
 <script src="../assets/charts/apexcharts@latest.js"></script>
 <script src="../assets/charts/react-apexcharts.iife.min.js"></script>
 <script type="text/babel">
@@ -256,7 +204,11 @@ foreach ($datos as $key => $value) {
               colors: ['transparent']
             },
             xaxis: {
-              categories: [<?php echo $salida3;?>],
+              categories: [<?php
+foreach ($datos as $key => $value) {
+    echo "'" . $value["dias"] . "'" . ",";
+}
+?>],
             },
             yaxis: {
               title: {
@@ -276,10 +228,18 @@ foreach ($datos as $key => $value) {
           },
           series: [{
             name: 'Silencio',
-            data: [<?php echo $salida1; ?>]
+            data: [<?php
+foreach ($datos as $key => $value) {
+    echo $value["silencio"] . ",";
+}
+?>]
           }, {
             name: 'Señal',
-            data: [<?php echo $salida2;?>]
+            data: [<?php
+foreach ($datos as $key => $value) {
+    echo $value["baja"] . ",";
+}
+?>]
           }],
         }
       }
@@ -300,114 +260,7 @@ foreach ($datos as $key => $value) {
     const domContainer = document.querySelector('#barras');
     ReactDOM.render(React.createElement(BarChart), domContainer);
   
+  
   </script>
   
-  <script type="text/babel">
 
-   
-    var dates = [];
-
-    <?php 
-    
-    
-    foreach ($historial as $in =>$out){  ?>  
-    
-    var innerArr =[Date.parse('<?php echo $out['registro']; ?>'), <?php echo $out['valor'];?>];   
-     dates.push(innerArr);
-     console.log(innerArr);
-    
-    <?php }    ?>
-        
-     
-     
-     
-    //var ts2 = 1484418600000;
-    //var dates = [Date.parse('<php echo join($historial['registro'],','); ?>')];
-    //var valor = [' echo join($historial['valor'],','); ?>'];
-    //console.log(dates);
-   
-    class LineChart extends React.Component {
-      
-      constructor(props) {
-        super(props);
-
-        this.state = {
-          options: {
-            chart: {
-              stacked: false,
-              zoom: {
-                type: 'x',
-                enabled: true
-              },
-              toolbar: {
-                autoSelected: 'zoom'
-              }
-            },
-            plotOptions: {
-              line: {
-                curve: 'smooth',
-              }
-            },
-            dataLabels: {
-              enabled: true
-            },
-
-            markers: {
-              size: 0,
-              style: 'full',
-            },
-            //colors: ['#0165fc'],
-            title: {
-              text: 'Historial de la Señal',
-              align: 'left'
-            },
-            fill: {
-              type: 'gradient',
-              gradient: {
-                shadeIntensity: 1,
-                inverseColors: false,
-                opacityFrom: 0.5,
-                opacityTo: 0,
-                stops: [0, 90, 100]
-              },
-            },
-            yaxis: {
-              min: 0,
-              max: 70,              
-              title: {
-                text: 'Nivel'
-              },
-            },
-            xaxis: {             
-               type: 'datetime',          
-            },
-
-            tooltip: {
-              shared: false,            
-            }
-          },
-          series: [{
-            name: 'Señal',
-            data: dates
-          }],
-        }
-      }
-
-      render() {
-
-        return (
-          <div>
-            <div id="chart">
-              <ReactApexChart options={this.state.options} series={this.state.series} type="area" height="350" />
-            </div>
-            <div id="html-dist">
-            </div>
-          </div>
-        );
-      }
-    }
-
-    const domContainer = document.querySelector('#senal');
-    ReactDOM.render(React.createElement(LineChart), domContainer);
-
-  </script>

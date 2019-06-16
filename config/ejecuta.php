@@ -4,6 +4,8 @@ session_start();
 $senal = $_POST['senal'];
 $descripcion = $_POST['descripcion'];
 $tiempo = $_POST['tiempo'];
+require '../static/modelo.php';
+
 
 require '../static/conexion.php';
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -22,7 +24,8 @@ $cont = 0;
 
 if ($senals != $senal) {
     //echo "Debe Modificar la Frecuencia";    
-
+    $ejecuta = new Consulta;
+    $ejecuta->truncar();
     $sql2 = "UPDATE  ramon.radio set frecuencia=$senal where idradio=1";
     if ($conn2->query($sql2) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";

@@ -66,7 +66,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
                                 </div>
                             </div>
                             <div class="control-group ">
-                                <label class="control-label">Usuario</label>
+                                <label class="control-label">Dirección de Correo</label>
                                 <div class="controls">
                                     <input id="correousuario" name="correousuario" class="span5" type="text" value="<?php
                                     if ($correo['autenticacion'] == 1) {
