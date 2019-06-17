@@ -200,8 +200,8 @@ foreach ($datos as $key => $value) {
 
         this.state = {
           options: {
-            labels: ['Señal OK', 'Silencio', 'Señal Baja'],
-            colors: ['#1ac810', '#2537ed', '#ef3838'],
+            labels: ['Señal OK', 'Silencio', 'Señal Baja','Señal Alta'],
+            colors: ['#1ac810', '#2537ed', '#ef3838','#ff9900'],
             responsive: [{
               breakpoint: 480,
               options: {
@@ -214,7 +214,7 @@ foreach ($datos as $key => $value) {
               }
             }]
           },
-          series: [<?php echo $uptime[0]["resultado"];?>, <?php echo $silencio1; ?>, <?php echo $baja1; ?>],
+          series: [<?php echo $uptime[0]["uptimetotal"];?>, <?php echo $uptime[0]["silencio"]; ?>, <?php echo $uptime[0]["senalbaja"]; ?>,<?php echo $uptime[0]["senalalta"]; ?>],
         }
       }
       render() {

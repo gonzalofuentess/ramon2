@@ -1,5 +1,7 @@
 <?php
+
 class Consulta {
+
     function conectarBD() {
         require('conexion.php');
         //variable que guarda la conexión de la base de datos
@@ -8,25 +10,19 @@ class Consulta {
         if (!$conexion) {
             echo 'Ha sucedido un error al internar conectar a la base de datos<br>';
         }
-        //devolvemos el objeto de conexión para usarlo en las consultas  
         return $conexion;
     }
 
     function desconectarBD($conexion) {
-        //Cierra la conexión y guarda el estado de la operación en una variable
         $close = mysqli_close($conexion);
-        //Comprobamos si se ha cerrado la conexión correctamente
         if (!$close) {
             echo 'Ha sucedido un error inexperado en la desconexion de la base de datos<br>';
         }
-        //devuelve el estado del cierre de conexión
         return $close;
     }
 
     function validaUsuario($username, $password) {
-
         try {
-
             $conexion = $this->conectarBD();
             $sql = "CALL ramon.usuario('$username','$password',@salida);";
 
@@ -34,7 +30,6 @@ class Consulta {
                 die();
             }
             $row = mysqli_fetch_array($result);
-
             $this->desconectarBD($conexion);
             return $row[0][0];
         } catch (Exception $ex) {
@@ -50,40 +45,28 @@ class Consulta {
         }
         $rawdata = array();
         $i = 0;
-
         while ($row = mysqli_fetch_array($result)) {
-            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata[$i] = $row;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata;
     }
 
     function buscaRadio() {
         $conexion = $this->conectarBD();
         $sql = "SELECT frecuencia, descripcion FROM ramon.radio;";
-
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
         $rawdata = array();
         $i = 0;
-
         while ($row = mysqli_fetch_array($result)) {
             //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata[$i] = $row;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata;
     }
 
@@ -91,8 +74,6 @@ class Consulta {
         $conexion = $this->conectarBD();
         $sql = "UPDATE  ramon.tipo_alerta set umbral=$baja, estado=$activo  where idtipo=2";
         $conexion->query($sql);
-
-
         $this->desconectarBD($conexion);
     }
 
@@ -100,8 +81,6 @@ class Consulta {
         $conexion = $this->conectarBD();
         $sql = "UPDATE  ramon.tipo_alerta set umbral=$alta, estado=$activo  where idtipo=3";
         $conexion->query($sql);
-
-
         $this->desconectarBD($conexion);
     }
 
@@ -116,39 +95,26 @@ class Consulta {
         $i = 0;
 
         while ($row = mysqli_fetch_array($result)) {
-            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata[$i] = $row;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata;
     }
 
     function consultaSemana() {
-
         $conexion = $this->conectarBD();
         $sql = "CALL ramon.semana();";
-
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
         $rawdata = array();
         $i = 0;
-
         while ($row = mysqli_fetch_array($result)) {
-            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata[$i] = $row;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return array_reverse($rawdata);
     }
 
@@ -164,15 +130,10 @@ class Consulta {
         $i = 0;
 
         while ($row3 = mysqli_fetch_array($result3)) {
-            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata3[$i] = $row3;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion3);
-        //devolvemos rawdata
-        //return $rawdata;
         return ($rawdata3);
     }
 
@@ -196,8 +157,6 @@ class Consulta {
         $alta = $row3[0];
         $this->desconectarBD($conexion2);
         $arreglo = array('silencio' => $silencio, 'baja' => $baja, 'alta' => $alta);
-        //devolvemos rawdata
-        //return $rawdata;
         return ($arreglo);
     }
 
@@ -225,66 +184,44 @@ class Consulta {
     }
 
     function consultaMail() {
-
         $conexion = $this->conectarBD();
         $sql = "SELECT servidor,puerto,tls,autenticacion,usuario,clave FROM ramon.servidor where idservidor=1;";
-
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
         $rawdata = array();
-        //$i = 0;
-
         while ($row = mysqli_fetch_array($result)) {
-
             array_push($rawdata, $row);
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata[0];
     }
 
     function agregarDestinatario($mail, $tipo) {
         $conexion = $this->conectarBD();
         $sql = "insert into ramon.destinatario(idservidor,tipodestinatario,destinatario) values (1,$tipo,'$mail');";
-
         $conexion->query($sql);
-
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return 1;
     }
 
     function buscaDestinatario($tipo) {
-
         $conexion = $this->conectarBD();
         $sql = "select iddestinatario, destinatario from ramon.destinatario where tipodestinatario=$tipo;";
-
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
         $rawdata = array();
         $i = 0;
-
         while ($row = mysqli_fetch_array($result)) {
-            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata[$i] = $row;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata;
     }
-    function eliminaDestinatario($iddestinatario, $tipo) {
+
+    function eliminaDestinatario($iddestinatario) {
         $conexion = $this->conectarBD();
         $sql = "DELETE FROM ramon.destinatario  where iddestinatario = $iddestinatario;";
         if ($conexion->query($sql) !== TRUE) {
@@ -293,34 +230,31 @@ class Consulta {
         $this->desconectarBD($conexion);
         return 1;
     }
+
     function agregarHora($hora) {
         $conexion = $this->conectarBD();
         $sql = "insert into ramon.programacion(tipodestinatario,horario) values (2,'$hora');";
         $conexion->query($sql);
-        $this->desconectarBD($conexion);      
+        $this->desconectarBD($conexion);
         return 1;
     }
+
     function listarHora() {
         $conexion = $this->conectarBD();
-        $sql = "SELECT * FROM ramon.programacion order by horario;";
+        $sql = "SELECT idprogramacion, date_format(horario,'%H:%i') as horario FROM ramon.programacion order by horario;";
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
         $rawdata = array();
         $i = 0;
-
         while ($row = mysqli_fetch_array($result)) {
-            //   //guardamos en rawdata todos los vectores/filas que nos devuelve la consulta
             $rawdata[$i] = $row;
             $i++;
         }
-        //Cerramos la base de datos
-
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata;
     }
+
     function eliminaHora($idprogramacion) {
         $conexion = $this->conectarBD();
         $sql = "DELETE FROM ramon.programacion  where idprogramacion = $idprogramacion;";
@@ -329,14 +263,6 @@ class Consulta {
         }
         $this->desconectarBD($conexion);
         return 1;
-    }
-
-    function agregaComando() {
-        
-    }
-
-    function eliminaComando() {
-        
     }
 
     function buscaSenal() {
@@ -355,8 +281,6 @@ class Consulta {
             $i++;
         }
         $this->desconectarBD($conexion);
-        //devolvemos rawdata
-        //return $rawdata;
         return $rawdata;
     }
 
