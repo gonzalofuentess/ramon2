@@ -26,12 +26,38 @@ class DatosBD {
     }
 
     function agregaComando($comando, $estado) {
-
         $conexion = $this->conectarBD();
+       # echo "$comando";
         $sql = "update ramon.comando set comando='$comando', estado=$estado where idcomando =1;";
         $conexion->query($sql);
         $this->desconectarBD($conexion);
         return 1;
+    }
+    
+    function consultaComando(){        
+        
+        $conexion = $this->conectarBD();
+        $sql = "SELECT comando,estado FROM ramon.comando where idcomando=1;";
+        if (!$result = mysqli_query($conexion, $sql)) {
+            die();
+        }
+        $rawdata = array();
+        while ($row = mysqli_fetch_array($result)) {
+            array_push($rawdata, $row);
+        }
+        $this->desconectarBD($conexion);
+        return $rawdata[0];
+        
+    }
+    
+    function eliminaComando(){
+         $conexion = $this->conectarBD();
+       # echo "$comando";
+        $sql = "update ramon.comando set comando=NULL, estado=NULL where idcomando =1;";
+        $conexion->query($sql);
+        $this->desconectarBD($conexion);
+        return 1;
+        
     }
 
 }

@@ -1,3 +1,23 @@
+<?php 
+
+require_once '../static/modelo2.php';
+
+$salida = new DatosBD();
+
+$arreglo=$salida->consultaComando();
+#print_r($arreglo['comando']);
+
+if ($arreglo['comando']==""){
+    $activo=0;
+    
+}else{
+    $activo=1;
+}
+
+
+
+?>
+
 <section class="page container">
     <div class="box">
         <div class="box-header"> 
@@ -7,17 +27,46 @@
             </h5>
         </div>
         <div class="box-content" class="span16">
-            <textarea id="idtext" style="width:1000px;height:80px" name="idtext" rows="10" cols="20"></textarea>
-        </div>
-        <div class="box-footer">          
-            <button id="submit-button" type="submit" class="btn btn-brand" name="action" onclick="probar(document.getElementById('idtext').value)">Validar</button>
-            <button type="submit" class="btn btn-primary" name="action" value="CANCEL">Guardar</button>           
-        </div>
-    </div> 
+            <textarea id="idtext" style="width:1000px;height:80px" name="idtext" rows="10" cols="20"><?php print_r($arreglo['comando']);?></textarea>          
+        </div>       
+
+
+    </div>
+
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary" name="action" onclick="guardar(document.getElementById('idtext').value)">Guardar</button>   
+        <button id="submit-button" type="submit" class="btn btn-brand" name="action" onclick="probar(document.getElementById('idtext').value)" <?php if($activo==0) echo 'disabled'; ?>>Probar</button>                
+        <button type="submit" class="btn btn-danger" name="action" onclick="eliminar()" <?php if($activo==0) echo 'disabled'; ?>>Eliminar</button>           
+    </div>
+</div> 
 </section>
 <script>
-function probar(comando) {
+    
+    function eliminar() {  
+      
+            var respuesta = confirm("¿Desea Eliminar el Comando?");
+            if (respuesta === true){
+                ejecutar();   
+            }
+    }
+    function ejecutar() {
+        $.ajax({
+            url: "eliminacomando.php",
+            success: function (resp) {
+                alert(resp);
+                //$('#resultado').html(resp)
+                if (resp === "Datos Actualizados") {
+                    location.reload();
+                }
+            }
+        });
 
+    }
+    
+    
+    
+    
+    function probar(comando) {
         $.ajax({
             url: "pruebacomando.php",
             type: "POST",
@@ -33,8 +82,7 @@ function probar(comando) {
         });
     }
 
-
-function guardar(comando) {
+    function guardar(comando) {
         $.ajax({
             url: "guardacomando.php",
             type: "POST",

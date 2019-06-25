@@ -46,14 +46,14 @@ include '../static/sesion.php';
                                                     ?>
                                                     <li><a href="../config/"><i class="icon-rss"></i>Radio</a></li>
                                                     <li class="active"><a><i class="icon-envelope-alt"></i>Correo</a></li> 
-                                                    <li><a href="../config/index.php?menu=comando"><i class="icon-play"></i>Comandos</a></li> 
+                                                    <li><a href="../config/index.php?menu=comando"><i class="icon-play"></i>Comando</a></li> 
                                                     <?php
                                                     break;
                                                 case "comando":
                                                     ?>
                                                     <li><a href="../config/"><i class="icon-rss"></i>Radio</a></li>
                                                     <li><a href="../config/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li> 
-                                                    <li class="active"><a><i class="icon-play"></i>Comandos</a></li> 
+                                                    <li class="active"><a><i class="icon-play"></i>Comando</a></li> 
                                                     <?php
                                                     break;
                                             }
@@ -61,7 +61,7 @@ include '../static/sesion.php';
                                             ?>
                                             <li class = "active"><a><i class="icon-rss"></i>Radio </a></li>
                                             <li><a href = "../config/index.php?menu=correo"><i class="icon-envelope-alt"></i>Correo</a></li>
-                                            <li><a href="../config/index.php?menu=comando"><i class="icon-play"></i>Comandos</a></li> 
+                                            <li><a href="../config/index.php?menu=comando"><i class="icon-play"></i>Comando</a></li> 
                                         <?php }
                                         ?>
 

@@ -268,7 +268,7 @@ class Consulta {
     function buscaSenal() {
         $conexion = $this->conectarBD();
         #$sql = "SELECT * FROM ramon.senal;";
-        $sql = "SELECT DISTINCT date_format(registro,'%Y-%m-%d %H:%i:%s') as registro,valor FROM ramon.senal WHERE registro > DATE_SUB(NOW(), INTERVAL 3 MINUTE);";
+        $sql = "SELECT date_format(registro,'%Y-%m-%d %H:%i:%s') as registro,valor FROM ramon.senal WHERE registro > DATE_SUB(NOW(), INTERVAL 3 MINUTE);";
 
         if (!$result = mysqli_query($conexion, $sql)) {
             die();

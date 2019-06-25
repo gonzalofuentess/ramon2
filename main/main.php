@@ -318,14 +318,6 @@ foreach ($datos as $key => $value) {
     
     <?php }    ?>
         
-     
-     
-     
-    //var ts2 = 1484418600000;
-    //var dates = [Date.parse('<php echo join($historial['registro'],','); ?>')];
-    //var valor = [' echo join($historial['valor'],','); ?>'];
-    //console.log(dates);
-   
     class LineChart extends React.Component {
       
       constructor(props) {
@@ -358,7 +350,7 @@ foreach ($datos as $key => $value) {
             },
             //colors: ['#0165fc'],
             title: {
-              text: 'Historial de la Señal',
+              text: 'Estado de la Señal',
               align: 'left'
             },
             fill: {
