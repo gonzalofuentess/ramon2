@@ -28,7 +28,7 @@ try {
     if ($verifica > 880 && $verifica < 1080) {
         $estatus = 1;
     } else {
-        echo "La frecuencia debe estar entre 88.1 a 107.9";
+        echo "La frecuencia debe estar entre 88.1 a 107.9\n";
     }
 } catch (Exception $ex) {
     echo 'Ingrese una frecuencia válida';
@@ -66,7 +66,7 @@ if ($cont === 1) {
     shell_exec('sudo systemctl restart ramon.service');
     echo "Datos Actualizados";
 } else {
-    echo "No se ha cambiado nada";
+    echo "Datos No Actualizados";
 }
 $conn->close();
 ?>
