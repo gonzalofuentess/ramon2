@@ -161,31 +161,31 @@ class Consulta {
     }
 
     function guardaMail($arreglo) {
-
         if ($arreglo['autenticacion'] == 1) {
             $servidor = $arreglo['servidor'];
             $puerto = $arreglo['puerto'];
+            $remitente = $arreglo['remitente'];
             $starttls = $arreglo['starttls'];
             $usuario = $arreglo['correousuario'];
-            $clave = $arreglo['correopassword'];
+            $clave = $arreglo['correopassword'];         
             $conexion = $this->conectarBD();
-            $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,tls=$starttls,usuario='$usuario',clave='$clave',autenticacion=1 where idservidor=1;";
+            $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,remitente='$remitente',tls=$starttls,usuario='$usuario',clave='$clave',autenticacion=1 where idservidor=1;";
             $conexion->query($sql);
-        } else {
+        } else {           
             $servidor = $arreglo['servidor'];
             $puerto = $arreglo['puerto'];
-            $starttls = $arreglo['starttls'];
+            $remitente = $arreglo['remitente'];
+            $starttls = $arreglo['starttls'];            
             $conexion = $this->conectarBD();
-            $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,tls=$starttls,usuario=NULL,clave=NULL,autenticacion=0 where idservidor=1;";
+            $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,remitente='$remitente',tls=$starttls,usuario=NULL,clave=NULL,autenticacion=0 where idservidor=1;";
             $conexion->query($sql);
         }
-        $this->desconectarBD($conexion);
-        return 1;
+        $this->desconectarBD($conexion);      
     }
 
     function consultaMail() {
         $conexion = $this->conectarBD();
-        $sql = "SELECT servidor,puerto,tls,autenticacion,usuario,clave FROM ramon.servidor where idservidor=1;";
+        $sql = "SELECT servidor,puerto,remitente,tls,autenticacion,usuario,clave FROM ramon.servidor where idservidor=1;";
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }

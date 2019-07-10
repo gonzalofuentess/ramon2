@@ -4,7 +4,7 @@ $modelo = new Consulta();
 $correo = $modelo->consultaMail();
 $destinatarios = $modelo->buscaDestinatario(1);
 #print_r($correo);
-#echo $correo['autenticacion'];
+
 ?>
 
 <section class="page container"> 
@@ -33,6 +33,12 @@ $destinatarios = $modelo->buscaDestinatario(1);
                                 <div class="controls">
                                     <input id="puerto" name="puerto" min="0" max="65535" class="span5" type="number" value="<?php echo $correo['puerto']; ?>">
 
+                                </div>
+                            </div>    
+                            <div class="control-group ">
+                                <label class="control-label">Remitente</label>
+                                <div class="controls">
+                                    <input id="remitente" name="remitente" class="span5" type="email" value="<?php echo $correo['remitente'];?>">
                                 </div>
                             </div>    
                             <p>STARTTLS</p>
@@ -99,7 +105,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
 
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value, document.getElementById('correousuario').value, document.getElementById('correopassword').value)">
+                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value,document.getElementById('remitente').value, document.getElementById('correousuario').value, document.getElementById('correopassword').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -209,7 +215,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
 
 <script>
 
-    function server(servidor, puerto, correousuario, correopassword, ) {
+    function server(servidor, puerto, remitente,correousuario, correopassword, ) {
         var e = document.getElementById("autenticacion");
 //var value = e.options[e.selectedIndex].value;
         var autenticacion = e.options[e.selectedIndex].text;
@@ -217,7 +223,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
         $.ajax({
             url: "server.php",
             type: "POST",
-            data: "servidor=" + servidor + "&puerto=" + puerto + "&switchtls=" + document.getElementById('switchtls').checked + "&autenticacion=" + autenticacion + "&correousuario=" + correousuario + "&correopassword=" + correopassword,
+            data: "servidor=" + servidor + "&puerto=" + puerto + "&remitente="+ remitente +"&switchtls=" + document.getElementById('switchtls').checked + "&autenticacion=" + autenticacion + "&correousuario=" + correousuario + "&correopassword=" + correopassword,
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)

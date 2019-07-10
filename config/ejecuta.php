@@ -24,11 +24,15 @@ $cont = 0;
 $estatus=0;
 
 try {
+    if(!$senals){
     $verifica = $senal * 10;
     if ($verifica > 880 && $verifica < 1080) {
         $estatus = 1;
     } else {
         echo "La frecuencia debe estar entre 88.1 a 107.9\n";
+    }
+    }else{
+        echo "Debe Ingresar una Frecuencia entre 88.1 a 107.9\n";
     }
 } catch (Exception $ex) {
     echo 'Ingrese una frecuencia válida';
