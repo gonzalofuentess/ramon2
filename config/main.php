@@ -20,6 +20,7 @@
                             <input id="senal" class="span4" type="number" min="88.1" max="107.9" step="0.1" placeholder="88.1 - 107.9" value="<?php echo $radio[0]['frecuencia']; ?>" required>
                         </div>                        
                     </form>
+                    <span><p id="freq"></p></span> 
                     <form class="form-inline">
                         <p>Descripción:</p>
                         <div class="input-prepend">
@@ -27,16 +28,15 @@
                             <input id="descripcion" class="span4" type="text" maxlength="16" placeholder="Descripción Radio" maxlength="140" value="<?php echo $radio[0]["descripcion"]; ?>" required>
                         </div>                        
                     </form>               
-
-
+                    <span><p id="desc"></p></span> 
                     <form class="form-inline">
                         <p>Tiempo de Silencio:</p>
                         <div class="input-prepend">
                             <span class="add-on"><i class="icon-pencil"></i></span>                           
                             <input class="span4" id="tiempo" type="number" min="5" max="900" placeholder="Tiempo de Silencio Aceptable" value="<?php echo $arreglo[0]["umbral"]; ?>" required>
-                        </div>
-                        <span><p id="sile"></p></span>                      
-                    </form>                    
+                        </div>                                           
+                    </form> 
+                    <span><p id="sile"></p></span>   
                 </div>
                 <div class="box-footer">
                     <button type="button" class="btn btn-primary" onclick="radio(document.getElementById('senal').value, document.getElementById('descripcion').value, document.getElementById('tiempo').value)">
@@ -241,28 +241,45 @@
     document.getElementById('switchbaja').onchange = function () {
         document.getElementById('bajacriticaltext').disabled = !this.checked;
     };
-
-
     document.getElementById('switchalta').onchange = function () {
         document.getElementById('altacriticaltext').disabled = !this.checked;
     };
-
 </script>
 <script>
-
     function radio(senal, descripcion, tiempo) {
-
-        var anterior = <?php echo $radio[0]['frecuencia']; ?>;
-
-        if (parseFloat(anterior) !== parseFloat(senal)) {
-            var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
-            if (respuesta === true)
-                ejecutar(senal, descripcion, tiempo);
-        } else
-            ejecutar(senal, descripcion, tiempo);
+        var descr = $.trim(descripcion);
+        var ok =true;
+        if(!descr){
+            $('#desc').html('<font color="red">Debe completar este campo</font>');
+            ok=false;
+        }
+        if(tiempo<5||tiempo>900||!tiempo){
+            $('#sile').html('<font color="red">Debe ingresar un valor entre 5 y 900</font>');
+            ok=false;
+        }
+        try {
+            var res = senal * 10;
+            if (res > 880 && res < 1080) {
+                var anterior = <?php echo $radio[0]['frecuencia']; ?>;
+                if (parseFloat(anterior) !== parseFloat(senal)) {
+                    var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
+                    if (respuesta === true)
+                        if(ok){
+                        ejecutar(senal, descripcion, tiempo);
+                    }
+                } else
+                    if(ok){
+                    ejecutar(senal, descripcion, tiempo);
+                }
+            }else{
+                $('#freq').html('<font color="red">Debe Ingresar un valor entre 88.1 y 107.9</font>');
+            }
+        } catch (err) {
+            $('#freq').html('<font color="red">Debe Ingresar un valor entre 88.1 y 107.9</font>');
+        }
     }
-    function ejecutar(senal, descripcion, tiempo) {
 
+    function ejecutar(senal, descripcion, tiempo) {
         $.ajax({
             url: "ejecuta.php",
             type: "POST",
@@ -273,18 +290,14 @@
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }
-
             }
         });
-
     }
 
     function baja(bajacriticaltext) {
-        if (bajacriticaltext>60) {
+        if (bajacriticaltext > 60 && bajacriticaltext > 4) {
             $('#baj').html('<font color="red">Debe Ser Menor o igual 60</font>');
-
         } else {
-
             $.ajax({
                 url: "baja.php",
                 type: "POST",
@@ -295,7 +308,6 @@
                     if (resp === "Datos Actualizados") {
                         location.reload();
                     }
-
                 }
             });
         }
@@ -313,7 +325,6 @@
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }
-
             }
         });
 

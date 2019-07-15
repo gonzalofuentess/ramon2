@@ -21,18 +21,15 @@ $tiempos = $salida['silencio'];
 
 $conn2 = new mysqli($servername, $username, $password, $dbname);
 $cont = 0;
-$estatus=0;
+$estatus = 0;
 
 try {
-    if(!$senals){
+
     $verifica = $senal * 10;
     if ($verifica > 880 && $verifica < 1080) {
         $estatus = 1;
     } else {
         echo "La frecuencia debe estar entre 88.1 a 107.9\n";
-    }
-    }else{
-        echo "Debe Ingresar una Frecuencia entre 88.1 a 107.9\n";
     }
 } catch (Exception $ex) {
     echo 'Ingrese una frecuencia válida';
@@ -48,7 +45,9 @@ if ($estatus == 1) {
             $cont = 1;
         }
     }
-} if ($descripcions != $descripcion) {
+}
+
+if ($descripcions != $descripcion) {
 
     $sql3 = "UPDATE  ramon.radio set descripcion='$descripcion' where idradio=1";
     if ($conn2->query($sql3) !== TRUE) {
@@ -56,7 +55,9 @@ if ($estatus == 1) {
     } else {
         $cont = 1;
     }
-} if ($tiempos != $tiempo) {
+}
+
+if ($tiempos != $tiempo) {
     $sql4 = "UPDATE  ramon.tipo_alerta set umbral=$tiempo where idtipo=1";
     if ($conn2->query($sql4) !== TRUE) {
         echo "Error insertando datos: " . $conn->error . "<br>";

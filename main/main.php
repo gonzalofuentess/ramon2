@@ -5,7 +5,7 @@ $uptime = $raw->consultaUptime();
 $datos = $raw->consultaSemana();
 $resumen = $raw->resumen();
 $historial = $raw->buscaSenal();
-
+print_r($resumen);
 #print_r($historial);
 #imprime valores de la base
 #foreach ($historial as $in =>$out){    
@@ -13,8 +13,6 @@ $historial = $raw->buscaSenal();
 #}
 #    echo $out['registro'];   
 #}
-
-
 
 
 
@@ -31,11 +29,16 @@ $historial = $raw->buscaSenal();
 
 
 function conversorSegundosHoras($tiempo_en_segundos) {
+    $dias = floor(($tiempo_en_segundos / 3600)/24);
     $horas = floor($tiempo_en_segundos / 3600);
     $minutos = floor(($tiempo_en_segundos - ($horas * 3600)) / 60);
     $segundos = $tiempo_en_segundos - ($horas * 3600) - ($minutos * 60);
-
+     
     $hora_texto = "";
+    if($dias>0){
+        $hora_texto .= $dias . "d ";
+        $horas=$horas-($dias*24);
+    }
     if ($horas > 0) {
         $hora_texto .= $horas . "h ";
     }
@@ -53,22 +56,22 @@ function conversorSegundosHoras($tiempo_en_segundos) {
 
 #print_r($datos);
 
-$var1 = conversorSegundosHoras($uptime[0]["resultado"]);
-if (isset($resumen["silencio"])) {
+$var1 = conversorSegundosHoras($resumen["uptime"]);
+if ($resumen["silencio"]>0) {
     $silencio = conversorSegundosHoras($resumen["silencio"]);
     $silencio1 = $resumen["silencio"];
 } else {
     $silencio = 0;
     $silencio1 = 0;
 }
-if (isset($resumen["baja"])) {
+if ($resumen["baja"]>0) {
     $baja = conversorSegundosHoras($resumen["baja"]);
     $baja1 = $resumen["baja"];
 } else {
     $baja = 0;
     $baja1 = 0;
 }
-if (isset($resumen["alta"])) {
+if ($resumen["alta"]>0) {
     $alta = conversorSegundosHoras($resumen["alta"]);
 } else {
     $alta = 0;

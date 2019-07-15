@@ -72,7 +72,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
                                 </div>
                             </div>
                             <div class="control-group ">
-                                <label class="control-label">Dirección de Correo</label>
+                                <label class="control-label">Usuario</label>
                                 <div class="controls">
                                     <input id="correousuario" name="correousuario" class="span5" type="text" value="<?php
                                     if ($correo['autenticacion'] == 1) {
@@ -88,11 +88,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
                             <div class="control-group ">
                                 <label class="control-label">Contraseña</label>
                                 <div class="controls">
-                                    <input id="correopassword" name="correopassword" class="span5" type="password" value="<?php
-                                    if ($correo['autenticacion'] == 1) {
-                                        echo "xxxxxxxxx";
-                                    }
-                                    ?>" <?php
+                                    <input id="correopassword" name="correopassword" class="span5" type="password"  <?php
                                            if ($correo['autenticacion'] == 0) {
                                                echo "disabled";
                                            }

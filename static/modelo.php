@@ -138,26 +138,37 @@ class Consulta {
     }
 
     function resumen() {
-        $conexion2 = $this->conectarBD();
-        $sql1 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=1;";
+        $conexion = $this->conectarBD();
+        $sql = "SELECT * from ramon.uptime;";
 
-        if (!$result1 = mysqli_query($conexion2, $sql1)) {
+        if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
-        $row1 = mysqli_fetch_array($result1);
-        $silencio = $row1[0];
-        //Cerramos la base de datos
-        $sql2 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=2;";
-        $result2 = mysqli_query($conexion2, $sql2);
-        $row2 = mysqli_fetch_array($result2);
-        $baja = $row2[0];
-        $sql3 = "SELECT SUM(duracion_seg) from ramon.alerta where idtipo=3;";
-        $result3 = mysqli_query($conexion2, $sql3);
-        $row3 = mysqli_fetch_array($result3);
-        $alta = $row3[0];
-        $this->desconectarBD($conexion2);
-        $arreglo = array('silencio' => $silencio, 'baja' => $baja, 'alta' => $alta);
-        return ($arreglo);
+
+        $i = 0;
+        $rawdata = array();
+        while ($row = mysqli_fetch_array($result)) {
+            if ($i == 0) {
+                $otro = array('uptime' => $row[1]);
+                $rawdata = array_merge($otro, $rawdata);
+            }if ($i == 1) {
+                $otro = array('silencio' => $row[1]);
+                $rawdata = array_merge($otro, $rawdata);
+            }if ($i == 2) {
+                $otro = array('baja' => $row[1]);
+                $rawdata = array_merge($otro, $rawdata);
+            }if ($i == 3) {
+                $otro = array('alta' => $row[1]);
+                $rawdata = array_merge($otro, $rawdata);
+            }
+            $i++;
+        }
+        $this->desconectarBD($conexion);
+        return $rawdata;
+        #$row1 = mysqli_fetch_array($result1);
+        #$this->desconectarBD($conexion2);
+        #$arreglo = array('silencio' => $silencio, 'baja' => $baja, 'alta' => $alta);
+        #return ($arreglo);
     }
 
     function guardaMail($arreglo) {
@@ -167,20 +178,20 @@ class Consulta {
             $remitente = $arreglo['remitente'];
             $starttls = $arreglo['starttls'];
             $usuario = $arreglo['correousuario'];
-            $clave = $arreglo['correopassword'];         
+            $clave = $arreglo['correopassword'];
             $conexion = $this->conectarBD();
             $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,remitente='$remitente',tls=$starttls,usuario='$usuario',clave='$clave',autenticacion=1 where idservidor=1;";
             $conexion->query($sql);
-        } else {           
+        } else {
             $servidor = $arreglo['servidor'];
             $puerto = $arreglo['puerto'];
             $remitente = $arreglo['remitente'];
-            $starttls = $arreglo['starttls'];            
+            $starttls = $arreglo['starttls'];
             $conexion = $this->conectarBD();
             $sql = "UPDATE ramon.servidor SET servidor='$servidor',puerto=$puerto,remitente='$remitente',tls=$starttls,usuario=NULL,clave=NULL,autenticacion=0 where idservidor=1;";
             $conexion->query($sql);
         }
-        $this->desconectarBD($conexion);      
+        $this->desconectarBD($conexion);
     }
 
     function consultaMail() {
