@@ -295,40 +295,22 @@
     }
 
     function baja(bajacriticaltext) {
-       if (document.getElementById('switchbaja').checked) {
-            var est =<?php echo $arreglo[2]['estado']; ?>;
-            if (est === 0) {
-                if (bajacriticaltext > 60 || bajacriticaltext < 5) {
-                    $('#baj').html('<font color="red">Debe ingresar un valor entre 5 a 60</font>');
-                } else {
-                    actualizabaja(bajacriticaltext);
-                }
-            } else {
-                var max =<?php echo $arreglo[2]['umbral']; ?>;
-                if (bajacriticaltext > max - 5 || bajacriticaltext > 60) {
-                    $('#baj').html('<font color="red">Debe ingresar un valor igual o menor a ' + (max - 5) + '</font>');
-                } else {
-                    actualizabaja(bajacriticaltext);
-                }
-            }
+        if (bajacriticaltext > 60 || bajacriticaltext < 5) {
+            $('#baj').html('<font color="red">Debe ingresar un valor entre 5 a 60</font>');
         } else {
-            actualizabaja(bajacriticaltext);
-        }
-       
-    }
-    function actualizabaja(bajacriticaltext) {
-        $.ajax({
-            url: "baja.php",
-            type: "POST",
-            data: "baja=" + document.getElementById('switchbaja').checked + "&bajacriticaltext=" + bajacriticaltext,
-            success: function (resp) {
-                alert(resp);
-                //$('#resultado').html(resp)
-                if (resp === "Datos Actualizados") {
-                    location.reload();
+            $.ajax({
+                url: "baja.php",
+                type: "POST",
+                data: "baja=" + document.getElementById('switchbaja').checked + "&bajacriticaltext=" + bajacriticaltext,
+                success: function (resp) {
+                    alert(resp);
+                    //$('#resultado').html(resp)
+                    if (resp === "Datos Actualizados") {
+                        location.reload();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     function alta(altacriticaltext) {
@@ -340,16 +322,16 @@
                 } else {
                     actualizaalta(altacriticaltext);
                 }
-            } else {
-                var min =<?php echo $arreglo[1]['umbral']; ?>;
-                if (altacriticaltext < min + 5 || altacriticaltext > 65) {
-                    $('#alt').html('<font color="red">Debe ingresar un valor igual o mayor a ' + (min + 5) + '</font>');
-                } else {
+            }else{
+                var min=<?php echo $arreglo[1]['umbral']; ?>;
+                if(altacriticaltext<min+5||altacriticaltext > 65){
+                    $('#alt').html('<font color="red">Debe ingresar un valor igual o mayor a ' +(min+5)+'</font>');
+                }else{
                     actualizaalta(altacriticaltext);
-                }
-
+                }               
+                
             }
-        } else {
+        }else{
             actualizaalta(altacriticaltext);
         }
     }
