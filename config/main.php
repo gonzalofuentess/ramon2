@@ -162,7 +162,7 @@
                         <div class="input-prepend">
 
                             <span class="add-on"><i class="icon-chevron-up"></i></span>
-                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="1" max="60" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
+                            <input class="span4" type="number" placeholder="Máximo" id="bajacriticaltext" min="5" max="60" value="<?php echo $arreglo[1]['umbral']; ?>" <?php
                             if (($arreglo[1]['estado']) == 0) {
                                 echo "disabled";
                             }
@@ -305,8 +305,8 @@
                 }
             } else {
                 var max =<?php echo $arreglo[2]['umbral']; ?>;
-                if (bajacriticaltext > max - 5 || bajacriticaltext > 60) {
-                    $('#baj').html('<font color="red">Debe ingresar un valor igual o menor a ' + (max - 5) + '</font>');
+                if (bajacriticaltext > max - 5 || bajacriticaltext > 60 || bajacriticaltext<5 ) {
+                    $('#baj').html('<font color="red">Debe ingresar un valor entre 5 a ' + (max - 5) + '</font>');
                 } else {
                     actualizabaja(bajacriticaltext);
                 }
@@ -343,7 +343,7 @@
             } else {
                 var min =<?php echo $arreglo[1]['umbral']; ?>;
                 if (altacriticaltext < min + 5 || altacriticaltext > 65) {
-                    $('#alt').html('<font color="red">Debe ingresar un valor igual o mayor a ' + (min + 5) + '</font>');
+                    $('#alt').html('<font color="red">Debe ingresar un valor entre ' + (min + 5) + ' y 65</font>');
                 } else {
                     actualizaalta(altacriticaltext);
                 }

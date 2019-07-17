@@ -5,7 +5,7 @@ $uptime = $raw->consultaUptime();
 $datos = $raw->consultaSemana();
 $resumen = $raw->resumen();
 $historial = $raw->buscaSenal();
-print_r($resumen);
+#print_r($resumen);
 #print_r($historial);
 #imprime valores de la base
 #foreach ($historial as $in =>$out){    
