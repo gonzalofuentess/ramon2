@@ -182,7 +182,6 @@
                         </label>
                     </div>
                 </div>
-
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary" onclick="baja(document.getElementById('bajacriticaltext').value)">
                         <i class="icon-ok"></i>
@@ -213,6 +212,7 @@
                             <input class="span4" type="number" placeholder="Máximo" value="70" readonly>
                         </div>                        
                     </form>  
+                    <span><p id="alt"></p></span> 
                     <div class="onoffswitch">
                         <input type="checkbox" name="switchalta" class="onoffswitch-checkbox" id="switchalta" <?php
                         if (($arreglo[2]['estado']) == 1) {
@@ -248,14 +248,14 @@
 <script>
     function radio(senal, descripcion, tiempo) {
         var descr = $.trim(descripcion);
-        var ok =true;
-        if(!descr){
+        var ok = true;
+        if (!descr) {
             $('#desc').html('<font color="red">Debe completar este campo</font>');
-            ok=false;
+            ok = false;
         }
-        if(tiempo<5||tiempo>900||!tiempo){
+        if (tiempo < 5 || tiempo > 900 || !tiempo) {
             $('#sile').html('<font color="red">Debe ingresar un valor entre 5 y 900</font>');
-            ok=false;
+            ok = false;
         }
         try {
             var res = senal * 10;
@@ -264,14 +264,14 @@
                 if (parseFloat(anterior) !== parseFloat(senal)) {
                     var respuesta = confirm("Al modificar la frecuencia se eliminará el historial de registros asociados. ¿Desea Continuar?");
                     if (respuesta === true)
-                        if(ok){
-                        ejecutar(senal, descripcion, tiempo);
-                    }
+                        if (ok) {
+                            ejecutar(senal, descripcion, tiempo);
+                        }
                 } else
-                    if(ok){
+                if (ok) {
                     ejecutar(senal, descripcion, tiempo);
                 }
-            }else{
+            } else {
                 $('#freq').html('<font color="red">Debe Ingresar un valor entre 88.1 y 107.9</font>');
             }
         } catch (err) {
@@ -295,8 +295,8 @@
     }
 
     function baja(bajacriticaltext) {
-        if (bajacriticaltext > 60 && bajacriticaltext > 4) {
-            $('#baj').html('<font color="red">Debe Ser Menor o igual 60</font>');
+        if (bajacriticaltext > 60 || bajacriticaltext < 5) {
+            $('#baj').html('<font color="red">Debe ingresar un valor entre 5 a 60</font>');
         } else {
             $.ajax({
                 url: "baja.php",
@@ -311,10 +311,31 @@
                 }
             });
         }
-
     }
 
     function alta(altacriticaltext) {
+        if (document.getElementById('switchalta').checked) {
+            var est =<?php echo $arreglo[1]['estado']; ?>;
+            if (est === 0) {
+                if (altacriticaltext > 65 || altacriticaltext < 10) {
+                    $('#alt').html('<font color="red">Debe ingresar un valor entre 10 a 65</font>');
+                } else {
+                    actualizaalta(altacriticaltext);
+                }
+            }else{
+                var min=<?php echo $arreglo[1]['umbral']; ?>;
+                if(altacriticaltext<min+5||altacriticaltext > 65){
+                    $('#alt').html('<font color="red">Debe ingresar un valor igual o mayor a ' +(min+5)+'</font>');
+                }else{
+                    actualizaalta(altacriticaltext);
+                }               
+                
+            }
+        }else{
+            actualizaalta(altacriticaltext);
+        }
+    }
+    function actualizaalta(altacriticaltext) {
         $.ajax({
             url: "alta.php",
             type: "POST",
@@ -327,14 +348,7 @@
                 }
             }
         });
-
     }
-
-
-
-
-
-
 </script>
 
 <!-- Resources -->

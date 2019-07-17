@@ -12,7 +12,6 @@ $umbral = $arreglo[1]['umbral'];
 if ($alta == "true") {
     $estado = 1;
 } else {
-
     $estado = 0;
 }
 
