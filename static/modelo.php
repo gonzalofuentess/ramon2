@@ -251,11 +251,25 @@ class Consulta {
     }
 
     function agregarHora($hora) {
-        $conexion = $this->conectarBD();
-        $sql = "insert into ramon.programacion(tipodestinatario,horario) values (2,'$hora');";
-        $conexion->query($sql);
-        $this->desconectarBD($conexion);
-        return 1;
+//        $conexion = $this->conectarBD();
+//        $sql = "insert into ramon.programacion(tipodestinatario,horario) values (2,'$hora');";
+//        $conexion->query($sql);
+//        $this->desconectarBD($conexion);
+//        return 1;
+//        
+        try {
+            $conexion = $this->conectarBD();
+            $sql = "CALL ramon.horario('$hora',@salida);";
+            $conexion->query($sql);
+            $results = $conexion->query('SELECT @salida');          
+            $row = $results->fetch_assoc() or die("Error al registrar datos" . mysqli_error($results));
+            $title = $row['@salida'];
+            return $title;
+        } catch (Exception $ex) {
+            return 0;
+        }
+        
+        
     }
 
     function listarHora() {

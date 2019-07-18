@@ -11,8 +11,11 @@ function validateDate($date, $format = 'Y-m-d H:i:s') {
 
 if (validateDate($horario, 'H:i')) {
     $actualiza = new Consulta();
-    $actualiza->agregarHora($horario);
-    echo "Datos Actualizados";
+    if($actualiza->agregarHora($horario)==1){
+        echo "Datos Actualizados";
+    }else{
+     echo "Horario ya registrado";   
+    }    
 } else {
     echo "Ingrese una hora en formato válido";
 }
