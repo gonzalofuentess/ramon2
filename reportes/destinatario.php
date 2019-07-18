@@ -7,9 +7,12 @@ $correo = $_POST['correo'];
 
 
 if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-    $actualiza = new Consulta();
-    $actualiza->agregarDestinatario($correo,2);
-    echo "Datos Actualizados";
+    $actualiza = new Consulta();   
+    if ($actualiza->agregarDestinatario($correo, 2) == 1) {
+        echo "Datos Actualizados";
+    } else {
+        echo "Destinatario ya existe ingrese otro correo";
+}
 } else {
     echo "!Ingrese un correo en formato Válido¡";
 }

@@ -25,7 +25,6 @@ class Consulta {
         try {
             $conexion = $this->conectarBD();
             $sql = "CALL ramon.usuario('$username','$password',@salida);";
-
             if (!$result = mysqli_query($conexion, $sql)) {
                 die();
             }
@@ -144,7 +143,6 @@ class Consulta {
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
-
         $i = 0;
         $rawdata = array();
         while ($row = mysqli_fetch_array($result)) {
@@ -165,10 +163,6 @@ class Consulta {
         }
         $this->desconectarBD($conexion);
         return $rawdata;
-        #$row1 = mysqli_fetch_array($result1);
-        #$this->desconectarBD($conexion2);
-        #$arreglo = array('silencio' => $silencio, 'baja' => $baja, 'alta' => $alta);
-        #return ($arreglo);
     }
 
     function guardaMail($arreglo) {
@@ -208,12 +202,26 @@ class Consulta {
         return $rawdata[0];
     }
 
+//    function agregarDestinatario($mail, $tipo) {
+//        $conexion = $this->conectarBD();
+//        $sql = "insert into ramon.destinatario(idservidor,tipodestinatario,destinatario) values (1,$tipo,'$mail');";
+//        $conexion->query($sql);
+//        $this->desconectarBD($conexion);
+//        return 1;
+//    }
+
     function agregarDestinatario($mail, $tipo) {
-        $conexion = $this->conectarBD();
-        $sql = "insert into ramon.destinatario(idservidor,tipodestinatario,destinatario) values (1,$tipo,'$mail');";
-        $conexion->query($sql);
-        $this->desconectarBD($conexion);
-        return 1;
+        try {
+            $conexion = $this->conectarBD();
+            $sql = "CALL ramon.destinatario('$mail',$tipo,@salida);";
+            $conexion->query($sql);
+            $results = $conexion->query('SELECT @salida');          
+            $row = $results->fetch_assoc() or die("Error al registrar datos" . mysqli_error($results));
+            $title = $row['@salida'];
+            return $title;
+        } catch (Exception $ex) {
+            return 2;
+        }
     }
 
     function buscaDestinatario($tipo) {
