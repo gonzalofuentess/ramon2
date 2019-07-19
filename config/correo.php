@@ -211,17 +211,17 @@ $destinatarios = $modelo->buscaDestinatario(1);
 </section>
 
 <script>
-
     function server(servidor, puerto, remitente, correousuario, correopassword) {
         var serv = $.trim(servidor);
         var e = document.getElementById("autenticacion");
         var autenticacion = e.options[e.selectedIndex].text;
         var ok = true;
+        var oka = true;
         if (!serv) {
             $('#ser').html('<font color="red">Debe completar este campo</font>');
             ok = false;
         }
-        if (puerto !=25 && puerto!=587 && puerto!=467) {
+        if (puerto !=25 && puerto!=587 && puerto!=465) {
             $('#port').html('<font color="red">Debe ingresar un puerto válido</font>');
             ok = false;
         }
@@ -231,6 +231,20 @@ $destinatarios = $modelo->buscaDestinatario(1);
         }
         if (autenticacion === 'NO' && ok) {
             ejecutaserver(serv, puerto, remitente, correousuario, correopassword, autenticacion);
+        }
+        if(autenticacion ==='SI'){
+            var nuser = $.trim(correousuario);
+            var npass = $.trim(correopassword);
+            if(!nuser){
+                $('#clav').html('<font color="red">Debe completar este campo</font>');
+                oka=false;
+            }if(!npass){
+                $('#usu').html('<font color="red">Debe completar este campo</font>');
+                oka=false;
+            }
+            if(ok&&oka){
+                ejecutaserver(serv, puerto, remitente, nuser, npass, autenticacion);
+            }
         }
     }
 
@@ -251,7 +265,6 @@ $destinatarios = $modelo->buscaDestinatario(1);
                 }
             }
         });
-
     }
 
     function destinatario(correo) {
@@ -280,10 +293,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }
-
             }
         });
-
     }
-
 </script>
