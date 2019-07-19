@@ -134,7 +134,7 @@ $horarios = $modelo->listarHora();
                                     <h5>
                                         Agregar Programación
                                     </h5>
-                                </div>
+                                </div>                                
                                 <div class = "box-content">
                                     <form class = "form-inline">
                                         <p>Horario:</p>
@@ -156,11 +156,14 @@ $horarios = $modelo->listarHora();
                         <div class = "span8">
                             <div class = "box">
                                 <div class = "box-header">
-                                    <i class = "icon-group"></i>
+                                    <i class = "icon-time"></i>
                                     <h5>
                                         Programación Actual
                                     </h5>
                                 </div>
+                                 <?php if (!$horarios) { ?>
+                                    <h4 align='center'>Sin programación</h4>               
+                                <?php } else { ?>
                                 <div class = "box-content box-table">
                                     <table id = "sample-table" class = "table table-hover table-bordered tablesorter">
                                         <thead>
@@ -191,6 +194,7 @@ $horarios = $modelo->listarHora();
 
                                         </tbody>
                                     </table>
+                                <?php }?>
                                 </div>
                             </div>
                         </div>
@@ -216,7 +220,6 @@ $horarios = $modelo->listarHora();
         ?>
 
         <script>
-
             function destinatario(correo) {
 
                 $.ajax({
@@ -229,11 +232,8 @@ $horarios = $modelo->listarHora();
                         if (resp === "Datos Actualizados") {
                             location.reload();
                         }
-
                     }
                 });
-
-
             }
             function elimina(destinatario) {
                 $.ajax({
@@ -246,10 +246,8 @@ $horarios = $modelo->listarHora();
                         if (resp === "Datos Actualizados") {
                             location.reload();
                         }
-
                     }
                 });
-
             }
             
             function agregaHora(horario) {             
@@ -263,16 +261,12 @@ $horarios = $modelo->listarHora();
                         if (resp === "Datos Actualizados") {
                             location.reload();
                         }
-
                     }
                 });
-
-
             }
             
             
-            function eliminaHora(hora) {
-                
+            function eliminaHora(hora) {                
                 $.ajax({
                     url: "eliminahora.php",
                     type: "POST",
@@ -283,17 +277,9 @@ $horarios = $modelo->listarHora();
                         if (resp === "Datos Actualizados") {
                             location.reload();
                         }
-
                     }
                 });
-
             }
-
-
         </script>
-
-
-
     </body>
-
 </html>

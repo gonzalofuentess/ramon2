@@ -4,7 +4,6 @@ $modelo = new Consulta();
 $correo = $modelo->consultaMail();
 $destinatarios = $modelo->buscaDestinatario(1);
 #print_r($correo);
-
 ?>
 
 <section class="page container"> 
@@ -25,22 +24,23 @@ $destinatarios = $modelo->buscaDestinatario(1);
                                 <label class="control-label">Dirección Servidor <span class="required"></span></label>
                                 <div class="controls">
                                     <input id="servidor" name="servidor" class="span5" type="text" value="<?php echo $correo['servidor']; ?>">
-
                                 </div>
                             </div>
+                            <span><p id="ser"></p></span> 
                             <div class="control-group ">
                                 <label class="control-label">Puerto</label>
                                 <div class="controls">
                                     <input id="puerto" name="puerto" min="0" max="65535" class="span5" type="number" value="<?php echo $correo['puerto']; ?>">
-
                                 </div>
-                            </div>    
+                            </div>
+                            <span><p id="port"></p></span> 
                             <div class="control-group ">
                                 <label class="control-label">Remitente</label>
                                 <div class="controls">
-                                    <input id="remitente" name="remitente" class="span5" type="email" value="<?php echo $correo['remitente'];?>">
+                                    <input id="remitente" name="remitente" class="span5" type="email" value="<?php echo $correo['remitente']; ?>">
                                 </div>
-                            </div>    
+                            </div>
+                            <span><p id="rem"></p></span> 
                             <p>STARTTLS</p>
                             <div class="onoffswitch">                               
                                 <input type="checkbox" name="switchtls" class="onoffswitch-checkbox" id="switchtls"  <?php
@@ -85,23 +85,24 @@ $destinatarios = $modelo->buscaDestinatario(1);
                                            ?>>
                                 </div>
                             </div>
+                            <span><p id="usu"></p></span> 
                             <div class="control-group ">
                                 <label class="control-label">Contraseña</label>
                                 <div class="controls">
                                     <input id="correopassword" name="correopassword" class="span5" type="password"  <?php
-                                           if ($correo['autenticacion'] == 0) {
-                                               echo "disabled";
-                                           }
-                                           ?>>
+                                    if ($correo['autenticacion'] == 0) {
+                                        echo "disabled";
+                                    }
+                                    ?>>
 
                                 </div>
                             </div>
+                            <span><p id="clav"></p></span> 
                         </fieldset>
                     </div>
-
                 </div>
                 <div class="box-footer">
-                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value,document.getElementById('remitente').value, document.getElementById('correousuario').value, document.getElementById('correopassword').value)">
+                    <button type="button" class="btn btn-primary" onclick="server(document.getElementById('servidor').value, document.getElementById('puerto').value, document.getElementById('remitente').value, document.getElementById('correousuario').value, document.getElementById('correopassword').value)">
                         <i class="icon-ok"></i>
                         Guardar
                     </button>
@@ -202,7 +203,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
                                 ?>                       
                             </tbody>
                         </table>
-<?php } ?>
+                    <?php } ?>
                 </div>                     
             </div>
         </div>
@@ -211,29 +212,49 @@ $destinatarios = $modelo->buscaDestinatario(1);
 
 <script>
 
-    function server(servidor, puerto, remitente,correousuario, correopassword, ) {
+    function server(servidor, puerto, remitente, correousuario, correopassword) {
+        var serv = $.trim(servidor);
         var e = document.getElementById("autenticacion");
-//var value = e.options[e.selectedIndex].value;
         var autenticacion = e.options[e.selectedIndex].text;
+        var ok = true;
+        if (!serv) {
+            $('#ser').html('<font color="red">Debe completar este campo</font>');
+            ok = false;
+        }
+        if (puerto !=25 && puerto!=587 && puerto!=467) {
+            $('#port').html('<font color="red">Debe ingresar un puerto válido</font>');
+            ok = false;
+        }
+        if (!validaMail(remitente)) {
+            $('#rem').html('<font color="red">Ingrese un correo válido</font>');
+            ok = false;
+        }
+        if (autenticacion === 'NO' && ok) {
+            ejecutaserver(serv, puerto, remitente, correousuario, correopassword, autenticacion);
+        }
+    }
 
+    function validaMail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function ejecutaserver(servidor, puerto, remitente, correousuario, correopassword, autenticacion) {
         $.ajax({
             url: "server.php",
             type: "POST",
-            data: "servidor=" + servidor + "&puerto=" + puerto + "&remitente="+ remitente +"&switchtls=" + document.getElementById('switchtls').checked + "&autenticacion=" + autenticacion + "&correousuario=" + correousuario + "&correopassword=" + correopassword,
+            data: "servidor=" + servidor + "&puerto=" + puerto + "&remitente=" + remitente + "&switchtls=" + document.getElementById('switchtls').checked + "&autenticacion=" + autenticacion + "&correousuario=" + correousuario + "&correopassword=" + correopassword,
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }
-
             }
         });
 
     }
 
     function destinatario(correo) {
-
         $.ajax({
             url: "destinatario.php",
             type: "POST",
@@ -244,12 +265,10 @@ $destinatarios = $modelo->buscaDestinatario(1);
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }
-
             }
         });
-
-
     }
+
     function elimina(destinatario) {
         $.ajax({
             url: "elimina.php",
