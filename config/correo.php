@@ -258,8 +258,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
             type: "POST",
             data: "servidor=" + servidor + "&puerto=" + puerto + "&remitente=" + remitente + "&switchtls=" + document.getElementById('switchtls').checked + "&autenticacion=" + autenticacion + "&correousuario=" + correousuario + "&correopassword=" + correopassword,
             success: function (resp) {
-                alert(resp);
-                //$('#resultado').html(resp)
+                alert(resp);             
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }
@@ -273,8 +272,7 @@ $destinatarios = $modelo->buscaDestinatario(1);
             type: "POST",
             data: "correo=" + correo,
             success: function (resp) {
-                alert(resp);
-                //$('#resultado').html(resp)
+                alert(resp);               
                 if (resp === "Datos Actualizados") {
                     location.reload();
                 }

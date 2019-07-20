@@ -139,7 +139,6 @@ class Consulta {
     function resumen() {
         $conexion = $this->conectarBD();
         $sql = "SELECT * from ramon.uptime;";
-
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
@@ -190,7 +189,7 @@ class Consulta {
 
     function consultaMail() {
         $conexion = $this->conectarBD();
-        $sql = "SELECT servidor,puerto,remitente,tls,autenticacion,usuario,clave FROM ramon.servidor where idservidor=1;";
+        $sql = "SELECT servidor,puerto,remitente,tls,autenticacion,usuario FROM ramon.servidor where idservidor=1;";
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
