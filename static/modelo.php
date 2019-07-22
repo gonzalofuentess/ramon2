@@ -139,9 +139,12 @@ class Consulta {
     function resumen() {
         $conexion = $this->conectarBD();
         $sql = "SELECT * from ramon.uptime;";
+        $sql2 = "call ramon.resumen();";
+        mysqli_query($conexion, $sql2);  
         if (!$result = mysqli_query($conexion, $sql)) {
             die();
         }
+              
         $i = 0;
         $rawdata = array();
         while ($row = mysqli_fetch_array($result)) {
