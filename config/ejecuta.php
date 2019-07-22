@@ -10,7 +10,7 @@ require '../static/modelo.php';
 require '../static/conexion.php';
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-if (!($res = $conn->query("CALL radio()"))) {
+if (!($res = $conn->query("CALL ramon.radio();"))) {
     echo "Falló la llamada: (" . $conn->errno . ") " . $conn->error;
 }
 /* E imprimimos el resultado para ver que el ejemplo ha funcionado */

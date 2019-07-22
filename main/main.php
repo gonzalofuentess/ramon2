@@ -5,28 +5,6 @@ $uptime = $raw->consultaUptime();
 $datos = $raw->consultaSemana();
 $resumen = $raw->resumen();
 $historial = $raw->buscaSenal();
-#print_r($resumen);
-#print_r($historial);
-#imprime valores de la base
-#foreach ($historial as $in =>$out){    
-#    echo $out['valor'];
-#}
-#    echo $out['registro'];   
-#}
-
-
-
-#echo join($historial['valor'], ','); 
-
-#print_r($historial);
-#echo join($historial['valor'],',');
-
-#print_r(json_encode($historial));
-#print_r($historial);
-#echo $uptime[0]["resultado"];
-#$json = json_encode($datos);
-#print_r($json);
-
 
 function conversorSegundosHoras($tiempo_en_segundos) {
     $dias = floor(($tiempo_en_segundos / 3600)/24);
@@ -89,6 +67,10 @@ foreach ($datos as $key => $value) {
 $salida3 = NULL;
 foreach ($datos as $key => $value) {
     $salida3 .= "'".$value["dias"]."'".",";
+}
+$salida4 = NULL;
+foreach ($datos as $key => $value) {
+    $salida4 .= "'".$value["alta"]."'".",";
 }
 
 
@@ -243,6 +225,7 @@ foreach ($datos as $key => $value) {
 
         this.state = {
           options: {
+            colors: ['#2537ed', '#ef3838','#ff9900'],
             plotOptions: {
               bar: {
                 horizontal: false,
@@ -251,7 +234,7 @@ foreach ($datos as $key => $value) {
               },
             },
             dataLabels: {
-              enabled: false
+              enabled: false              
             },
             stroke: {
               show: true,
@@ -259,7 +242,7 @@ foreach ($datos as $key => $value) {
               colors: ['transparent']
             },
             xaxis: {
-              categories: [<?php echo $salida3;?>],
+              categories: [<?php echo $salida3;?>]            
             },
             yaxis: {
               title: {
@@ -267,7 +250,7 @@ foreach ($datos as $key => $value) {
               }
             },
             fill: {
-              opacity: 1
+              opacity: 1             
             },
             tooltip: {
               y: {
@@ -275,14 +258,17 @@ foreach ($datos as $key => $value) {
                   return  val + " Alerta"
                 }
               }
-            }
+            }                    
           },
           series: [{
             name: 'Silencio',
-            data: [<?php echo $salida1; ?>]
+            data: [<?php echo $salida1; ?>] 
           }, {
-            name: 'Señal',
+            name: 'Señal Baja',
             data: [<?php echo $salida2;?>]
+          },{
+            name: 'Señal Alta',
+            data: [<?php echo $salida4;?>]
           }],
         }
       }

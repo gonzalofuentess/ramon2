@@ -74,7 +74,7 @@ if ($arreglo['comando']==""){
             success: function (resp) {
                 alert(resp);
                 //$('#resultado').html(resp)
-                if (resp === "Datos Actualizados") {
+                if (resp === "Comando Ejecutado") {
                     location.reload();
                 }
 
