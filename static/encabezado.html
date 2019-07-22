@@ -9,8 +9,8 @@
             <a class="brand"><i class="icon-rss"> Ramon</i></a>          
 
             <div id="app-nav-top-bar" class="nav-collapse">                        
-                <ul class="nav pull-right">                   
-                    
+                <ul class="nav pull-right">                
+
                     <li>
                         <a data-toggle="modal" data-target="#myModal" href="#">Cambiar Contraseña</a>                      
 
@@ -26,7 +26,6 @@
 <!-- Modal -->
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -41,30 +40,45 @@
                             <div class="controls">
                                 <input id="oldpass" name="oldpass" class="span4" type="password" value="" required>
                             </div>
-                        </div>
+                        </div>                      
                         <div class="control-group ">
                             <label class="control-label">Nueva Contraseña</label>
                             <div class="controls">
                                 <input id="newpass" name="newpass" class="span4" type="password" value="" required>
-
                             </div>
-                        </div>     
+                        </div>                       
                         <div class="control-group ">
                             <label class="control-label">Confirmar Contraseña</label>
                             <div class="controls">
                                 <input id="confirmarpass" name="confirmarpass" class="span4" type="password" value="" required>
-
                             </div>
-                        </div>   
+                        </div> 
+                        <p id="vpass"></p>
                     </fieldset>
                 </div>
-
-
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-primary" id="myFormSubmit" onclick="cambiaclave()">Guardar</button>
             </div>
         </div>
 
     </div>
 </div>
+
+<script>
+    function cambiaclave() {
+        var apass = $.trim($("#oldpass").val());
+        var npass = $.trim($("#newpass").val());
+        var cpass = $.trim($("#confirmarpass").val());
+        if (!apass || !npass || !cpass) {
+            $('#vpass').html('<font color="red">Debe completar todos los campos</font>');
+        } else {
+            if (npass !== cpass) {
+                $('#vpass').html('<font color="red">Campos de contraseña nueva no coinciden</font>');
+            } else {
+                alert('Datos Actualizados Correctamente');
+                $('#myModal').modal('hide');
+            }
+        }
+    }
+</script>
