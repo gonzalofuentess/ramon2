@@ -76,9 +76,14 @@
             if (npass !== cpass) {
                 $('#vpass').html('<font color="red">Campos de contraseña nueva no coinciden</font>');
             } else {
-                alert('Contraseña Actualizada Correctamente');
-                $('#myModal').modal('hide');
+                if (npass.length < 5) {
+                    $('#vpass').html('<font color="red">La contraseña debe tener mínimo 5 caracteres</font>');
+                } else {
+                    alert('Contraseña Actualizada Correctamente');
+                    $('#myModal').modal('hide');
+                }
+
             }
         }
-    }
+    }   
 </script>

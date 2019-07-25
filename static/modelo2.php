@@ -59,6 +59,15 @@ class DatosBD {
         return 1;
         
     }
+     function ActualizaClave($clave){
+         $conexion = $this->conectarBD();
+       # echo "$comando";
+        $sql = "update ramon.comando set comando=NULL, estado=NULL where idcomando =1;";
+        $conexion->query($sql);
+        $this->desconectarBD($conexion);
+        return 1;
+        
+    }
 
 }
 
