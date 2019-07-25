@@ -48,6 +48,7 @@ if ($autenticacion == "NO") {
 require_once '../static/modelo.php';
 $guardar = new Consulta();
 $guardar->guardaMail($arreglo);
+shell_exec('sudo systemctl start actualizadatos.service');
 
 echo "Datos Actualizados";
 ?>
